@@ -130,7 +130,7 @@ if (!product) {
                      
 
 };
-  const solidWaxVariants = [{name:"Black",file:"babalux-solid-wax-black-1.png"},{name:"Yellow",file:"babalux-solid-wax-yellow-2.png"},{name:"Green",file:"babalux-solid-wax-green-3.png"}];
+  const solidWaxVariants = [{name:"Black",file:"babalux-solid-wax-black-1.png"},{name:"Green",file:"babalux-solid-wax-green-2.png"},{name:"Yellow",file:"babalux-solid-wax-yellow-3.png"}];
   const galleryImages = product[0] === "babalux-solid-wax" ? solidWaxVariants.map(v => v.file) : (galleries[product[0]] || (product[4] ? [product[4]] : []));
   const description = product[5] || "Product details will be added when the source information is available.";
 
@@ -188,13 +188,14 @@ if (!product) {
       track.style.transform = `translateX(-${index * 100}%)`;
       dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
       if (current) current.textContent = index + 1;
+      if (product[0] === "babalux-solid-wax") document.querySelectorAll(".variant-option").forEach((b,i) => b.classList.toggle("active", i === index));
     }
 
     document.querySelector(".gallery-prev").addEventListener("click", () => goTo(index - 1));
     document.querySelector(".gallery-next").addEventListener("click", () => goTo(index + 1));
     dots.forEach(dot => dot.addEventListener("click", () => goTo(Number(dot.dataset.index))));
     if (product[0] === "babalux-solid-wax") {
-      document.querySelectorAll(".variant-option").forEach(btn => btn.addEventListener("click", () => goTo(Number(btn.dataset.variant))));
+      document.querySelectorAll(".variant-option").forEach(btn => btn.addEventListener("click", () => { const selected = Number(btn.dataset.variant); goTo(selected); document.querySelectorAll(".variant-option").forEach((b,i) => b.classList.toggle("active", i === selected)); }));
     }
 
     stage.addEventListener("touchstart", e => {
