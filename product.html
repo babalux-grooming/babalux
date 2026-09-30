@@ -47,7 +47,7 @@ h1{font:600 clamp(42px,6vw,70px)/1.02 "Playfair Display",Georgia,serif;margin:0 
 .category{color:#d6b774;text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:700;margin-bottom:10px}
 .description{color:#aaa39a;font-size:16px;line-height:1.8;max-width:650px;margin-bottom:28px}
 .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
-.pill{border:1px solid rgba(214,183,116,.2);padding:8px 11px;color:#c8c1b5;font-size:11px}
+.pill{border:1px solid rgba(214,183,116,.2);padding:8px 11px;color:#c8c1b5;font-size:11px}.variant-picker{margin:0 0 28px}.variant-label{display:block;color:#f5ead1;font-weight:700;margin-bottom:10px}.variant-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.variant-option{border:1px solid rgba(214,183,116,.2);background:#121212;color:#f4f0e8;padding:10px;cursor:pointer;text-align:center}.variant-option.active{border-color:#d6b774;box-shadow:inset 0 0 0 1px #d6b774}.variant-option img{width:100%;height:90px;object-fit:contain;background:#171717;margin-bottom:8px}.variant-option span{display:block;font-size:12px}
 .price{font:600 31px "Playfair Display",Georgia,serif;color:#f5ead1;margin-bottom:24px}
 .buy-button{display:inline-flex;align-items:center;justify-content:center;border:1px solid #d6b774;background:#d6b774;color:#111;padding:15px 25px;font-weight:700;text-transform:uppercase;letter-spacing:1px;cursor:pointer}
 .buy-button:hover{background:transparent;color:#d6b774}
@@ -88,7 +88,8 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#080
 
 <script>
 const products = [["studio-techno", "STUDIO TECHNO", "Hair Scissors", "£22.99", "studio-techno-2.jpg", "Wide and precise, they allow a precision work keeping softness in the cut sensation.", ["5.5", "6.0"]], ["pro-cut", "PRO CUT", "Razors", "£4.99", "", "Classic half-blade razor for beard and trimming.", ["Half Blade"]], ["pet-scissors", "PET SCISSORS", "Pet Grooming", "£64.99", "", "", ["Thinning Scissors"]], ["sonic-plastic-handle", "SONIC PLASTIC HANDLE SERIES", "Hair Scissors", "£9.99", "", "Model with ergonomic handle and lowered thumb ring for a correct working posture.", ["5.5", "6.0"]], ["studio-techno-relax-th", "STUDIO TECHNO RELAX-TH", "Thinning Scissors", "£26.99", "", "Code 2231. 38-tooth thinning shears with a 40% cutting ratio.", ["2231", "38 Teeth", "40%"]], ["standard-272", "STANDARD HAIR SCISSORS 272", "Thinning Scissors", "£16.99", "", "Code 272. Thinning scissors with half blade and a 30% cutting ratio.", ["272", "30%"]], ["standard-2127", "STANDARD HAIR SCISSORS 2127", "Hair Scissors", "£16.99", "", "Scissors with a classical and multipurpose line for professional people and schools.", ["2127", "6.0", "6.5"]], ["studio-style-2433", "STUDIO STYLE 2433", "Hair Scissors", "£26.99", "", "Scissors with an innovative and functional line, ideal to thin and for cuts of high precision.", ["2433"]], ["studio-style-2431", "STUDIO STYLE 2431", "Thinning Scissors", "£26.99", "studio-style-2431.png", "38-tooth thinning scissors with a 40% cutting ratio.", ["2431", "38 Teeth", "40%"]], ["standard-set", "STANDARD HAIR SCISSORS SET", "Hair Scissors", "£41.99", "standard-hair-scissors-set.jpg", "Unique article including one cutting piece and one thinning piece.", ["Cutting Scissors", "Thinning Scissors"]], ["standard-hair-scissors", "STANDARD HAIR SCISSORS", "Hair Scissors", "£25.99", "standard-hair-scissors.png?v=2", "Linear and tough scissors for a soft and precise cut.", ["6.0", "6.5", "7.0"]], ["gold-series-2471", "GOLD SERIES 2471", "Thinning Scissors", "£63.99", "gold-series-2471.jpg", "Professional thinning scissors from the Gold Series 2471.", ["2471", "Gold Series"]], ["pro-cut-comb", "PRO CUT", "Razors", "£4.99", "", "Classic razor with half blade and thinning comb.", ["Half Blade", "Thinning Comb"]], ["babalux-hair-wax-04", "BABALUX BARBER 04 AQUA STRONG WAX", "Hair Wax / Styling", "£8.99", "babalux-hair-wax-04-1.png", "BABALUX BARBER 04 AQUA STRONG WAX.", []], ["babalux-spider-hair-wax","BABALUX SPIDER HAIR WAX","Hair Wax / Styling","£7.99","babalux-spider-hair-wax-1.png","BABALUX Spider Hair Wax.",[]],["babalux-hair-wax-03", "BABALUX BARBER 03 AQUA STRONG WAX", "Hair Wax / Styling", "£7.99", "", "BABALUX Hair Wax, Barber 03 Aqua Strong Wax.", ["03"]], ["babalux-hair-wax-01","BABALUX BARBER 01 AQUA STRONG WAX","Hair Wax / Styling","£7.99","babalux-barber-01-image-1.png","BABALUX Hair Wax, Barber 01 Aqua Strong Wax.",["01"]],
-["babalux-hair-wax-cream-01","BABALUX HAIR WAX CREAM 01","Hair Wax / Styling","£7.99","babaluxhairwax.cream01.png","BABALUX Hair Wax Cream 01.",["01"]]];
+["babalux-hair-wax-cream-01","BABALUX HAIR WAX CREAM 01","Hair Wax / Styling","£7.99","babaluxhairwax.cream01.png","BABALUX Hair Wax Cream 01.",["01"]],
+["babalux-solid-wax","BABALUX SOLID WAX","Hair Wax / Styling","£5.99","babalux-solid-wax-black-1.png","BABALUX Solid Wax 500ml. Available in Black, Azulen and Natural.",["Black","Azulen","Natural","500ml"]]];
 
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
@@ -129,7 +130,8 @@ if (!product) {
                      
 
 };
-  const galleryImages = galleries[product[0]] || (product[4] ? [product[4]] : []);
+  const solidWaxVariants = [{name:"Black",file:"babalux-solid-wax-black-1.png"},{name:"Yellow",file:"babalux-solid-wax-yellow-2.png"},{name:"Green",file:"babalux-solid-wax-green-3.png"}];
+  const galleryImages = product[0] === "babalux-solid-wax" ? solidWaxVariants.map(v => v.file) : (galleries[product[0]] || (product[4] ? [product[4]] : []));
   const description = product[5] || "Product details will be added when the source information is available.";
 
   const galleryMarkup = galleryImages.length ? `
@@ -164,7 +166,7 @@ if (!product) {
         <div class="eyebrow">Product Details</div>
         <h1>${product[1]}</h1>
         <p class="description">${description}</p>
-        <div class="meta">${product[6].map(m => `<span class="pill">${m}</span>`).join("")}</div>
+        <div class="meta">${product[6].map(m => `<span class="pill">${m}</span>`).join("")}</div>${product[0] === "babalux-solid-wax" ? `<div class="variant-picker"><span class="variant-label">Choose colour</span><div class="variant-options">${solidWaxVariants.map((v,i) => `<button class="variant-option ${i===0?"active":""}" type="button" data-variant="${i}"><img src="${v.file}" alt="${v.name} Solid Wax"><span>${v.name}</span></button>`).join("")}</div></div>` : ""}
         <div class="price">${product[3]}</div>
         <button class="buy-button" onclick="buyProduct('${product[0]}')">Buy Now</button>
         <div class="note">Secure checkout will be connected to this product.</div>
