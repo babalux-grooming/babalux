@@ -193,6 +193,9 @@ if (!product) {
     document.querySelector(".gallery-prev").addEventListener("click", () => goTo(index - 1));
     document.querySelector(".gallery-next").addEventListener("click", () => goTo(index + 1));
     dots.forEach(dot => dot.addEventListener("click", () => goTo(Number(dot.dataset.index))));
+    if (product[0] === "babalux-solid-wax") {
+      document.querySelectorAll(".variant-option").forEach(btn => btn.addEventListener("click", () => goTo(Number(btn.dataset.variant))));
+    }
 
     stage.addEventListener("touchstart", e => {
       startX = e.touches[0].clientX;
