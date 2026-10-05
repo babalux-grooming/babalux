@@ -102,6 +102,18 @@ section{padding:90px 0}.stats{padding:0;background:#101010;border-block:1px soli
 /* Collection images: show the complete image without cropping */
 .collection-card img { object-fit: contain; object-position: center; }
 
+
+/* Collection image sizing: fill the card width without cropping */
+.collection-card img {
+  width: 100%;
+  height: auto !important;
+  max-height: none;
+  object-fit: contain !important;
+  object-position: center;
+  display: block;
+  aspect-ratio: auto !important;
+}
+
 </style>
 </head>
 <body>
