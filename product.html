@@ -258,7 +258,14 @@ if (!product) {
   "magiccap-reusable-hair-coloring-cap": ["MAGICAP Hair Highlighting Salon Display.png"],
   "milisten-choctaek-professional-foil-roll": ["CHOCTAEK Foil Roll in Emerald Salon.png","CHOCTAEK Professional Foil Roll in Salon Setting.png","Luxury Salon Foil Roll Display.png"],
   "babalux-oxicream": ["Futuristic 9%25 Oxicream Beauty Display.png","BABALUX OXICREAM Salon Bottle.png","Luxurious Babalux Oxicream Studio Bottle.png","Luxury BABALUX OXICREAM Bottle.png"],
-}; const arkoVariants = [
+}; const marmaraVariants = [
+  {name:"No. 24", size:"150 ml", file:"Barber Marmara No. 24 Amber Cologne Display.png"},
+  {name:"No. 23", size:"400 ml", file:"marmara-no23-400ml.jpg"},
+  {name:"No. 22", size:"400 ml • Red", file:"marmara-no22-400ml-red.jpg"},
+  {name:"No. 22", size:"400 ml • Blue", file:"marmara-no22-400ml-blue.jpg"},
+  {name:"No. 25", size:"150 ml", file:"marmara-no25-150ml.jpg"}
+];
+const arkoVariants = [
     {name:"Sensitive", files:["arko-men-shaving-cream-100g-1(1).png","arko-men-shaving-cream-100g-2(1).png"]},
     {name:"Hydrate", files:["arko-men-shaving-cream-100g-3(1).png"]}
   ];
@@ -270,7 +277,7 @@ if (!product) {
     {name:"Purple",file:"wax-heater-500cc-purple-1.png"},
     {name:"Pink",file:"wax-heater-500cc-pink-1.png"}
   ];
-  let galleryImages = product[0] === "babalux-solid-wax" ? solidWaxVariants.map(v => v.file) : product[0] === "wax-heater-500cc" ? waxHeaterVariants.map(v => v.file) : product[0] === "arko-men-shaving-cream-100g" ? arkoVariants[0].files : product[0] === "babalux-oxicream" ? oxicreamVariants.map(v => v.file) : (galleries[product[0]] || (product[4] ? [product[4]] : []));
+  let galleryImages = product[0] === "marmara-barber-cologne-graffiti-no24-150ml" ? marmaraVariants.map(v => v.file) : product[0] === "babalux-solid-wax" ? solidWaxVariants.map(v => v.file) : product[0] === "wax-heater-500cc" ? waxHeaterVariants.map(v => v.file) : product[0] === "arko-men-shaving-cream-100g" ? arkoVariants[0].files : product[0] === "babalux-oxicream" ? oxicreamVariants.map(v => v.file) : (galleries[product[0]] || (product[4] ? [product[4]] : []));
   const description = product[5] || "Product details will be added when the source information is available.";
 
   const galleryMarkup = galleryImages.length ? `
@@ -313,6 +320,43 @@ if (!product) {
     </div>
   `;
 
+  if (product[0] === "marmara-barber-cologne-graffiti-no24-150ml") {
+    const copy = document.querySelector(".product-copy");
+    const picker = document.createElement("div");
+    picker.className = "variant-picker";
+    const label = document.createElement("span");
+    label.className = "variant-label";
+    label.textContent = "Choose fragrance";
+    picker.appendChild(label);
+    const options = document.createElement("div");
+    options.className = "variant-options";
+    picker.appendChild(options);
+    marmaraVariants.forEach((v,i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "variant-option" + (i === 0 ? " active" : "");
+      btn.dataset.marmaraVariant = i;
+      const img = document.createElement("img");
+      img.src = v.file;
+      img.alt = "Marmara " + v.name + " " + v.size;
+      const span = document.createElement("span");
+      span.textContent = v.name + " (" + v.size + ")";
+      btn.appendChild(img);
+      btn.appendChild(span);
+      options.appendChild(btn);
+    });
+    const status = document.createElement("div");
+    status.className = "borthe-selection-status";
+    status.textContent = "Selected: ";
+    const strong = document.createElement("strong");
+    strong.id = "marmara-selected";
+    strong.textContent = "No. 24 (150 ml)";
+    status.appendChild(strong);
+    picker.appendChild(status);
+    const meta = copy.querySelector(".meta");
+    if (meta) meta.insertAdjacentElement("afterend", picker);
+    var marmaraPickerInstalled = true;
+  }
   if (galleryImages.length > 1) {
     const track = document.getElementById("gallery-track");
     const stage = document.getElementById("gallery-stage");
@@ -328,6 +372,11 @@ if (!product) {
       dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
       if (current) current.textContent = index + 1;
       if (product[0] === "babalux-solid-wax" || product[0] === "wax-heater-500cc") document.querySelectorAll(".variant-option").forEach((b,i) => b.classList.toggle("active", i === index));
+      if (product[0] === "marmara-barber-cologne-graffiti-no24-150ml") {
+        document.querySelectorAll("[data-marmara-variant]").forEach((b,i) => b.classList.toggle("active", i === index));
+        const selectedM = document.getElementById("marmara-selected");
+        if (selectedM) selectedM.textContent = marmaraVariants[index].name + " (" + marmaraVariants[index].size + ")";
+      }
       if (product[0] === "babalux-oxicream") document.querySelectorAll("[data-oxicream-variant]").forEach((b,i) => b.classList.toggle("active", i === index));
     }
 
@@ -337,6 +386,13 @@ if (!product) {
     if (product[0] === "babalux-solid-wax" || product[0] === "wax-heater-500cc") {
       document.querySelectorAll(".variant-option").forEach(btn => btn.addEventListener("click", () => { const selected = Number(btn.dataset.variant); goTo(selected); document.querySelectorAll(".variant-option").forEach((b,i) => b.classList.toggle("active", i === selected)); }));
     }
+
+  if (product[0] === "marmara-barber-cologne-graffiti-no24-150ml") {
+    document.querySelectorAll("[data-marmara-variant]").forEach(btn => btn.addEventListener("click", () => {
+      const selected = Number(btn.dataset.marmaraVariant);
+      goTo(selected);
+    }));
+  }
 
   if (product[0] === "babalux-oxicream") {
     document.querySelectorAll("[data-oxicream-variant]").forEach(btn => btn.addEventListener("click", () => {
