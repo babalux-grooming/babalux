@@ -141,9 +141,9 @@ const oxicreamVariants = [
 let selectedOxicreamVariant = 0;
 
 const bortheSerumVariants = [
-  {name:"Pro-Keratin", description:"Nourishing and repairing serum containing liquid keratin. Designed to hydrate, strengthen and improve hair elasticity."},
-  {name:"Protein", description:"Helps restore and strengthen the hair fibres, providing strength, elasticity and durability."},
-  {name:"Argan", description:"Hydrates, adds shine, facilitates detangling, increases hair elasticity and resilience, and helps repair damaged hair. 100ml."}
+  {name:"Pro-Keratin", file:"Borthe Pro-Keratin Serum on Marble.png", description:"Nourishing and repairing serum containing liquid keratin. Designed to hydrate, strengthen and improve hair elasticity."},
+  {name:"Protein", file:"Premium Protein Serum at Dusk.png", description:"Helps restore and strengthen the hair fibres, providing strength, elasticity and durability."},
+  {name:"Argan", file:"borthe-argan-serum-restored.png", description:"Hydrates, adds shine, facilitates detangling, increases hair elasticity and resilience, and helps repair damaged hair. 100ml."}
 ];
 let selectedBortheVariant = "Pro-Keratin";
 
@@ -280,7 +280,7 @@ if (!product) {
     {name:"Purple",file:"wax-heater-500cc-purple-1.png"},
     {name:"Pink",file:"wax-heater-500cc-pink-1.png"}
   ];
-  let galleryImages = product[0] === "babalux-solid-wax" ? solidWaxVariants.map(v => v.file) : product[0] === "wax-heater-500cc" ? waxHeaterVariants.map(v => v.file) : product[0] === "arko-men-shaving-cream-100g" ? arkoVariants[0].files : product[0] === "babalux-oxicream" ? oxicreamVariants.map(v => v.file) : (galleries[product[0]] || (product[4] ? [product[4]] : []));
+  let galleryImages = product[0] === "babalux-solid-wax" ? solidWaxVariants.map(v => v.file) : product[0] === "wax-heater-500cc" ? waxHeaterVariants.map(v => v.file) : product[0] === "arko-men-shaving-cream-100g" ? arkoVariants[0].files : product[0] === "borthe-hair-serum" ? bortheSerumVariants.map(v => v.file) : product[0] === "babalux-oxicream" ? oxicreamVariants.map(v => v.file) : (galleries[product[0]] || (product[4] ? [product[4]] : []));
   const description = product[5] || "Product details will be added when the source information is available.";
 
   const galleryMarkup = galleryImages.length ? `
@@ -315,7 +315,7 @@ if (!product) {
         <div class="eyebrow">Product Details</div>
         <h1>${product[1]}</h1>
         <p class="description">${description}</p>
-        <div class="meta">${product[6].map(m => `<span class="pill">${m}</span>`).join("")}</div>${product[0] === "babalux-solid-wax" ? `<div class="variant-picker"><span class="variant-label">Choose colour</span><div class="variant-options">${solidWaxVariants.map((v,i) => `<button class="variant-option ${i===0?"active":""}" type="button" data-variant="${i}"><img src="${v.file}" alt="${v.name} Solid Wax"><span>${v.name}</span></button>`).join("")}</div></div>` : product[0] === "wax-heater-500cc" ? `<div class="variant-picker"><span class="variant-label">Choose colour</span><div class="variant-options">${waxHeaterVariants.map((v,i) => `<button class="variant-option ${i===0?"active":""}" type="button" data-variant="${i}"><img src="${v.file}" alt="${v.name} Wax Heater 500 cc"><span>${v.name}</span></button>`).join("")}</div></div>` : product[0] === "arko-men-shaving-cream-100g" ? `<div class="variant-picker"><span class="variant-label">Choose option</span><div class="variant-options">${arkoVariants.map((v,i) => `<button class="variant-option ${i===0?"active":""}" type="button" data-arko-variant="${i}"><img src="${v.files[0]}" alt="${v.name} ARKO MEN Shaving Cream"><span>${v.name}</span></button>`).join("")}</div></div>` : product[0] === "borthe-hair-serum" ? `<div class="variant-picker"><span class="variant-label">Choose formula</span><div class="variant-options">${bortheSerumVariants.map((v,i) => `<button class="variant-option borthe-variant-option ${i===0?"active":""}" type="button" data-borthe-variant="${i}"><span>${v.name}</span></button>`).join("")}</div><div class="borthe-selection-status">Selected: <strong id="borthe-selected">Pro-Keratin</strong></div></div>` : product[0] === "babalux-oxicream" ? `<div class="variant-picker"><span class="variant-label">Choose Oxicream strength</span><div class="variant-options">${oxicreamVariants.map((v,i) => `<button class="variant-option oxicream-variant-option ${i===0?"active":""}" type="button" data-oxicream-variant="${i}"><img src="${v.file}" alt="BABALUX Professional Oxicream ${v.name} ${v.volume}"><span>${v.name} (${v.volume})</span></button>`).join("")}</div><div class="borthe-selection-status">Selected: <strong id="oxicream-selected">9% (30 VOL)</strong></div></div>` : ""}
+        <div class="meta">${product[6].map(m => `<span class="pill">${m}</span>`).join("")}</div>${product[0] === "babalux-solid-wax" ? `<div class="variant-picker"><span class="variant-label">Choose colour</span><div class="variant-options">${solidWaxVariants.map((v,i) => `<button class="variant-option ${i===0?"active":""}" type="button" data-variant="${i}"><img src="${v.file}" alt="${v.name} Solid Wax"><span>${v.name}</span></button>`).join("")}</div></div>` : product[0] === "wax-heater-500cc" ? `<div class="variant-picker"><span class="variant-label">Choose colour</span><div class="variant-options">${waxHeaterVariants.map((v,i) => `<button class="variant-option ${i===0?"active":""}" type="button" data-variant="${i}"><img src="${v.file}" alt="${v.name} Wax Heater 500 cc"><span>${v.name}</span></button>`).join("")}</div></div>` : product[0] === "arko-men-shaving-cream-100g" ? `<div class="variant-picker"><span class="variant-label">Choose option</span><div class="variant-options">${arkoVariants.map((v,i) => `<button class="variant-option ${i===0?"active":""}" type="button" data-arko-variant="${i}"><img src="${v.files[0]}" alt="${v.name} ARKO MEN Shaving Cream"><span>${v.name}</span></button>`).join("")}</div></div>` : product[0] === "borthe-hair-serum" ? `<div class="variant-picker"><span class="variant-label">Choose formula</span><div class="variant-options">${bortheSerumVariants.map((v,i) => `<button class="variant-option borthe-variant-option ${i===0?"active":""}" type="button" data-borthe-variant="${i}"><img src="${v.file}" alt="BORTHE ${v.name} Hair Serum"><span>${v.name}</span></button>`).join("")}</div><div class="borthe-selection-status">Selected: <strong id="borthe-selected">Pro-Keratin</strong></div></div>` : product[0] === "babalux-oxicream" ? `<div class="variant-picker"><span class="variant-label">Choose Oxicream strength</span><div class="variant-options">${oxicreamVariants.map((v,i) => `<button class="variant-option oxicream-variant-option ${i===0?"active":""}" type="button" data-oxicream-variant="${i}"><img src="${v.file}" alt="BABALUX Professional Oxicream ${v.name} ${v.volume}"><span>${v.name} (${v.volume})</span></button>`).join("")}</div><div class="borthe-selection-status">Selected: <strong id="oxicream-selected">9% (30 VOL)</strong></div></div>` : ""}
         <div class="price">${product[3]}</div>
         <button class="buy-button borthe-buy-button" onclick="buyProduct('${product[0]}')">${product[0] === "borthe-hair-serum" ? "Buy Pro-Keratin" : "Buy Now"}</button>
         <div class="note">Secure checkout will be connected to this product.</div>
@@ -338,6 +338,16 @@ if (!product) {
       dots.forEach((dot, i) => dot.classList.toggle("active", i === index));
       if (current) current.textContent = index + 1;
       if (product[0] === "babalux-solid-wax" || product[0] === "wax-heater-500cc") document.querySelectorAll(".variant-option").forEach((b,i) => b.classList.toggle("active", i === index));
+      if (product[0] === "borthe-hair-serum") {
+        document.querySelectorAll("[data-borthe-variant]").forEach((b,i) => b.classList.toggle("active", i === index));
+        selectedBortheVariant = bortheSerumVariants[index].name;
+        const selectedBortheEl = document.getElementById("borthe-selected");
+        if (selectedBortheEl) selectedBortheEl.textContent = selectedBortheVariant;
+        const bortheDescriptionEl = document.querySelector(".description");
+        if (bortheDescriptionEl) bortheDescriptionEl.textContent = bortheSerumVariants[index].description;
+        const bortheBuyButton = document.querySelector(".borthe-buy-button");
+        if (bortheBuyButton) bortheBuyButton.textContent = `Buy ${selectedBortheVariant}`;
+      }
       if (product[0] === "babalux-oxicream") document.querySelectorAll("[data-oxicream-variant]").forEach((b,i) => b.classList.toggle("active", i === index));
     }
 
@@ -351,7 +361,7 @@ if (!product) {
     document.querySelectorAll(".variant-option[data-borthe-variant]").forEach(btn => btn.addEventListener("click", () => {
       const selected = Number(btn.dataset.bortheVariant);
       selectedBortheVariant = bortheSerumVariants[selected].name;
-      document.querySelectorAll(".variant-option[data-borthe-variant]").forEach((b,i) => b.classList.toggle("active", i === selected));
+      goTo(selected);
       const selectedEl = document.getElementById("borthe-selected");
       if (selectedEl) selectedEl.textContent = selectedBortheVariant;
       const descriptionEl = document.querySelector(".description");
