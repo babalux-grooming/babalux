@@ -406,7 +406,6 @@ const arkoVariants = [
     document.querySelectorAll("[data-powder-wax-variant]").forEach(btn => btn.addEventListener("click", () => {
       const selected = Number(btn.dataset.powderWaxVariant);
       selectedPowderWaxVariant = selected;
-      goTo(selected);
       const selectedEl = document.getElementById("powder-wax-selected");
       if (selectedEl) selectedEl.textContent = powderWaxVariants[selected].name;
     }));
@@ -481,6 +480,15 @@ const arkoVariants = [
     dots.forEach(dot => dot.addEventListener("click", () => goTo(Number(dot.dataset.index))));
     if (product[0] === "babalux-solid-wax" || product[0] === "wax-heater-500cc") {
       document.querySelectorAll(".variant-option").forEach(btn => btn.addEventListener("click", () => { const selected = Number(btn.dataset.variant); goTo(selected); document.querySelectorAll(".variant-option").forEach((b,i) => b.classList.toggle("active", i === selected)); }));
+    }
+    if (product[0] === "babalux-barber-hair-styling-powder-wax") {
+      document.querySelectorAll("[data-powder-wax-variant]").forEach(btn => btn.addEventListener("click", () => {
+        const selected = Number(btn.dataset.powderWaxVariant);
+        selectedPowderWaxVariant = selected;
+        goTo(selected);
+        const selectedEl = document.getElementById("powder-wax-selected");
+        if (selectedEl) selectedEl.textContent = powderWaxVariants[selected].name;
+      }));
     }
 
   if (product[0] === "marmara-barber-cologne-graffiti-no24-150ml") {
