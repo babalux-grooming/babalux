@@ -185,7 +185,7 @@ const pageProducts=products.slice(0,pageSize);
 grid.innerHTML=pageProducts.map(p=>`
 <article class="product-card">
   <a class="product-image product-link" href="product.html?id=${encodeURIComponent(p[0])}" aria-label="View ${p[1]}">
-    ${p[4]?\`<img src="${p[4]}" alt="BABALUX ${p[1]}" loading="lazy">\`:\`<div class="image-placeholder"><strong>${p[2]}</strong>Product image coming soon</div>\`}
+    ${p[4] ? '<img src="' + p[4] + '" alt="BABALUX ' + p[1] + '" loading="lazy">' : '<div class="image-placeholder"><strong>' + p[2] + '</strong>Product image coming soon</div>'}
   </a>
   <div class="product-info">
     <div class="product-category">${p[2]}</div>
