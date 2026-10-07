@@ -1,3 +1,4 @@
+/* BABALUX catalogue pagination fix — 2026-10-07 */
 const products = window.BABALUX_PRODUCTS || [];
 const page = Number(document.body.dataset.page || 1);
 const pageSize = 25;
@@ -40,12 +41,12 @@ count.textContent = `Page ${page} of ${totalPages} · Products ${start + 1}–${
 
 const pagination = document.getElementById("pagination");
 const prev = page > 1
-  ? `<a class="pagination-button" href="products-${page-1}.html"><span aria-hidden="true">←</span> Previous</a>`
-  : `<span class="pagination-button disabled" aria-disabled="true"><span aria-hidden="true">←</span> Previous</span>`;
+  ? `<a class="pagination-button" href="products-${page-1}.html"><span aria-hidden="true">←</span> Previous Page</a>`
+  : `<span class="pagination-button disabled" aria-disabled="true"><span aria-hidden="true">←</span> Previous Page</span>`;
 
 const next = page < totalPages
-  ? `<a class="pagination-button" href="products-${page+1}.html">Next <span aria-hidden="true">→</span></a>`
-  : `<span class="pagination-button disabled" aria-disabled="true">Next <span aria-hidden="true">→</span></span>`;
+  ? `<a class="pagination-button" href="products-${page+1}.html">Next Page <span aria-hidden="true">→</span></a>`
+  : `<span class="pagination-button disabled" aria-disabled="true">Next Page <span aria-hidden="true">→</span></span>`;
 
 const numbers = Array.from({length: totalPages}, (_,i) => {
   const n=i+1;
