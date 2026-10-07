@@ -1,0 +1,77 @@
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#111827;color:#f4f0e8;font-family:"DM Sans",Arial,sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.container{width:min(1180px,calc(100% - 40px));margin:auto}
+
+header{position:sticky;top:0;z-index:10;background:#111827;border-bottom:1px solid rgba(214,183,116,.16);backdrop-filter:blur(14px)}
+.nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{font:600 28px "Playfair Display",Georgia,serif;letter-spacing:5px;color:#f5ead1}
+.nav-links{display:flex;gap:30px;list-style:none;margin:0;padding:0;color:#c8c1b5;font-size:14px}
+.nav-links a:hover{color:#d6b774}
+
+.catalogue{padding:72px 0 40px}
+.catalogue-header{display:flex;align-items:end;justify-content:space-between;gap:30px;margin-bottom:36px}
+.eyebrow{color:#d6b774;text-transform:uppercase;letter-spacing:4px;font-size:12px;font-weight:700;margin-bottom:14px}
+h1{font:600 clamp(42px,6vw,68px)/1.02 "Playfair Display",Georgia,serif;margin:0}
+.page-summary{color:#99938a;max-width:420px;margin:0}
+
+.product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+.product-card{display:flex;flex-direction:column;background:#192337;border:1px solid rgba(214,183,116,.14);overflow:hidden;min-width:0}
+.product-image{height:300px;background:radial-gradient(circle,rgba(255,255,255,.07),transparent 55%),#1e293b;display:flex;align-items:center;justify-content:center}
+.product-image img{width:100%;height:100%;object-fit:contain;padding:14px}
+.product-info{padding:19px;display:flex;flex-direction:column;flex:1}
+.product-category{color:#d6b774;text-transform:uppercase;letter-spacing:2px;font-size:10px;font-weight:700}
+.product-title{font:600 21px/1.22 "Playfair Display",Georgia,serif;margin:7px 0 10px}
+.product-description{color:#99938a;font-size:13px;line-height:1.5;margin:0 0 14px}
+.product-meta{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 18px}
+.meta-pill{border:1px solid rgba(214,183,116,.2);padding:5px 8px;color:#c8c1b5;font-size:9px}
+.product-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid rgba(214,183,116,.12);padding-top:15px;margin-top:auto}
+.price{font:600 20px "Playfair Display",Georgia,serif;color:#f5ead1}
+.buy-button{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 14px;background:#d6b774;color:#111;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+
+.pagination{display:flex;align-items:center;justify-content:center;gap:12px;margin:52px 0 24px;padding-top:28px;border-top:1px solid rgba(214,183,116,.14)}
+.pagination-button,.pagination-number{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid rgba(214,183,116,.25);background:#192337;color:#f4f0e8;font-size:13px;font-weight:600}
+.pagination-button{padding:0 18px;gap:8px}
+.pagination-number{width:44px}
+.pagination-button:hover:not(.disabled),.pagination-number:hover:not(.active){border-color:#d6b774;color:#d6b774}
+.pagination-number.active{background:#d6b774;color:#111;border-color:#d6b774}
+.pagination-button.disabled{opacity:.35;pointer-events:none}
+.pagination-label{font-size:12px;color:#99938a;margin-top:14px;text-align:center}
+
+footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0b1120}
+.footer-inner{display:flex;justify-content:space-between;align-items:center}
+.footer-logo{font:600 22px "Playfair Display",Georgia,serif;letter-spacing:4px;color:#f5ead1}
+.copyright{color:#69655f;font-size:12px}
+
+@media(max-width:1100px){
+  .product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:780px){
+  .container{width:min(100% - 28px,1180px)}
+  .nav{min-height:64px}
+  .logo{font-size:22px;letter-spacing:3px}
+  .nav-links{gap:14px;font-size:12px}
+  .catalogue{padding:52px 0 30px}
+  .catalogue-header{display:block}
+  .page-summary{margin-top:12px}
+  .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .product-image{height:190px}
+  .product-info{padding:12px}
+  .product-title{font-size:15px}
+  .product-description{font-size:11px}
+  .meta-pill{font-size:8px;padding:4px 6px}
+  .price{font-size:16px}
+  .buy-button{width:100%;min-height:38px;font-size:9px}
+  .product-bottom{flex-direction:column;align-items:stretch}
+  .pagination{gap:6px;flex-wrap:wrap}
+  .pagination-button{flex:1;min-width:120px;padding:0 12px}
+  .pagination-number{width:38px}
+  .footer-inner{flex-direction:column;gap:8px;text-align:center}
+}
+@media(max-width:430px){
+  .nav-links{gap:10px;font-size:10px}
+  .product-image{height:165px}
+  .product-title{font-size:14px}
+}
