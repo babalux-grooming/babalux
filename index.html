@@ -150,6 +150,14 @@ section{padding:90px 0}.stats{padding:0;background:#151E30;border-block:1px soli
 .catalog-page-arrow{padding:0 18px;gap:8px}.catalog-page-number{width:44px}.catalog-page-arrow:hover:not(.disabled),.catalog-page-number:hover:not(.active){border-color:#d6b774;color:#d6b774}.catalog-page-number.active{background:#d6b774;color:#111;border-color:#d6b774}.catalog-page-arrow.disabled{opacity:.35;pointer-events:none}.catalog-page-note{text-align:center;color:#99938a;font-size:12px;margin-top:12px}
 @media(max-width:1100px){.homepage-product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){.homepage-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.catalog-pagination{gap:6px;margin-top:40px;padding-top:22px}.catalog-page-arrow{flex:1;min-width:120px;padding:0 12px}.catalog-page-number{width:38px}}
+
+
+/* Consistent product-card footer alignment across every homepage catalogue page */
+.product-card{display:flex;flex-direction:column;min-width:0;height:100%}
+.product-info{display:flex;flex-direction:column;flex:1;min-width:0}
+.product-bottom{margin-top:auto}
+.product-description{min-height:48px}
+@media(max-width:700px){.product-description{min-height:0}}
 </style>
 </head>
 <body>
