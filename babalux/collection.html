@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Opening BABALUX collection…</title>
+</head>
+<body>
+  <p>Opening the BABALUX collection…</p>
+  <script>
+    (function () {
+      var isGitHubProjectDomain = location.hostname === "babalux-grooming.github.io";
+      var destination = isGitHubProjectDomain
+        ? "/babalux/collection.html"
+        : "/collection.html";
+      location.replace(destination + location.search + location.hash);
+    })();
+  </script>
+</body>
+</html>
