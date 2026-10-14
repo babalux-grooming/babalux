@@ -75,3 +75,9 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0b1
   .product-image{height:165px}
   .product-title{font-size:14px}
 }
+/* Compact catalogue and collection cards: show specs on the individual product page */
+.product-card .product-category,
+.product-card .product-description,
+.product-card .product-meta {
+  display: none !important;
+}
