@@ -110,6 +110,8 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0B1
 .cart-feedback.show{display:block}
 .cart-feedback a{color:#d6b774;text-decoration:underline;text-underline-offset:3px}
 .buy-button:disabled{opacity:.45;cursor:not-allowed}
+
+.variant-image-badge{position:absolute;left:18px;top:18px;z-index:3;max-width:calc(100% - 36px);padding:7px 11px;background:rgba(17,24,39,.94);border:1px solid #d6b774;color:#d6b774;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;pointer-events:none}
 </style>
 </head>
 <body>
@@ -382,6 +384,17 @@ const arkoVariants = [
     </div>
   `;
 
+
+
+  const variantVisual = document.querySelector(".product-visual");
+  if (variantVisual) {
+    const badge = document.createElement("div");
+    badge.id = "variant-image-badge";
+    badge.className = "variant-image-badge";
+    badge.style.display = "none";
+    badge.setAttribute("aria-live", "polite");
+    variantVisual.appendChild(badge);
+  }
 
   if (sizeVariantConfigs[product[0]]) {
     const config = sizeVariantConfigs[product[0]];
@@ -741,6 +754,11 @@ const arkoVariants = [
       if (note) note.textContent = "Your selected size or option will be saved in your cart. Secure Stripe checkout will be connected separately.";
     }
 
+    const badge = document.getElementById("variant-image-badge");
+    if (badge) {
+      badge.textContent = selected && selected.label ? selected.label : "";
+      badge.style.display = selected && selected.label ? "block" : "none";
+    }
     if (selected && selected.label) {
       document.querySelectorAll(".gallery-slide img").forEach(img => {
         img.alt = "BABALUX " + product[1] + " — " + selected.label;
