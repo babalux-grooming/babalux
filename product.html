@@ -742,10 +742,10 @@ const arkoVariants = [
     if (selected && selected.priceConfirmed === false) {
       if (priceNode) priceNode.textContent = "Price to be confirmed";
       if (button) {
-        button.disabled = true;
-        button.title = "This option needs a confirmed price before it can be added to the cart.";
+        button.disabled = false;
+        button.title = "The selected option can be saved; its final price must be confirmed.";
       }
-      if (note) note.textContent = "The price for this fragrance/size has not been confirmed yet. Please ask BABALUX before adding this option to your cart.";
+      if (note) note.textContent = "You can save this option in your cart, but its price needs confirmation before checkout.";
     } else {
       if (priceNode) priceNode.textContent = (selected && selected.price) || product[3];
       if (button) {
@@ -779,13 +779,9 @@ const arkoVariants = [
   if (addToCartButton) {
     addToCartButton.addEventListener("click", function () {
       const selected = getCurrentVariant();
-      if (selected && selected.priceConfirmed === false) {
-        updateSelectedVariantPresentation();
-        return;
-      }
-
-      const priceText = (selected && selected.price) || product[3];
-      const unitPrice = Number(String(priceText).replace(/[^0-9.]/g, "")) || 0;
+      const priceConfirmed = !selected || selected.priceConfirmed !== false;
+      const priceText = priceConfirmed ? ((selected && selected.price) || product[3]) : "Price to be confirmed";
+      const unitPrice = priceConfirmed ? (Number(String(priceText).replace(/[^0-9.]/g, "")) || 0) : null;
       const variantLabel = selected ? selected.label : "";
       const variantKey = selected ? selected.key : "standard";
       const cartItem = {
@@ -795,6 +791,7 @@ const arkoVariants = [
         variant: variantLabel,
         priceText: priceText,
         unitPrice: unitPrice,
+        priceConfirmed: priceConfirmed,
         image: (selected && selected.image) || product[4],
         quantity: 1
       };
