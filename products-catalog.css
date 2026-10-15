@@ -81,3 +81,8 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0b1
 .product-card .product-meta {
   display: none !important;
 }
+
+ 
+/* Footer navigation for customer shipping information */
+.footer-links{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:12px;color:#bdb6aa}
+.footer-links a:hover{color:#d6b774}
