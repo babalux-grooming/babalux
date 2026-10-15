@@ -674,12 +674,12 @@ const arkoVariants = [
     if (sizeVariantConfigs[currentId]) {
       const config = sizeVariantConfigs[currentId];
       const option = config.variants[activeOptionIndex("[data-size-variant]")];
-      return {key:"size-" + option.value, label:"Size " + option.value + " inches", image:product[4], price:option.price || product[3], priceConfirmed:true};
+      return {key:"size-" + option.value, label:"Size " + option.value + " inches", image:product[4], price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
     }
 
     if (currentId === "excellence-brushes") {
       const option = excellenceBrushVariants[activeOptionIndex("[data-excellence-colour]")];
-      return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:product[4], price:option.price || product[3], priceConfirmed:true};
+      return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:product[4], price:option.price || product[3], priceConfirmed:true, showImageBadge:false};
     }
 
     if (currentId === "marmara-barber-cologne-graffiti-no24-150ml") {
@@ -690,13 +690,14 @@ const arkoVariants = [
         label:option.name + " (" + option.size + ")",
         image:option.file,
         price:option.price || null,
-        priceConfirmed:Boolean(option.price)
+        priceConfirmed:Boolean(option.price),
+        showImageBadge:true
       };
     }
 
     if (currentId === "babalux-solid-wax") {
       const option = solidWaxVariants[activeOptionIndex("[data-variant]")];
-      return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:option.file, price:option.price || product[3], priceConfirmed:true};
+      return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:option.file, price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
     }
 
     if (currentId === "wax-heater-500cc") {
@@ -706,22 +707,22 @@ const arkoVariants = [
 
     if (currentId === "arko-men-shaving-cream-100g") {
       const option = arkoVariants[activeOptionIndex("[data-arko-variant]")];
-      return {key:"option-" + option.name.toLowerCase(), label:"Option: " + option.name, image:option.files[0], price:option.price || product[3], priceConfirmed:true};
+      return {key:"option-" + option.name.toLowerCase(), label:"Option: " + option.name, image:option.files[0], price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
     }
 
     if (currentId === "babalux-oxicream") {
       const option = oxicreamVariants[activeOptionIndex("[data-oxicream-variant]")];
-      return {key:"strength-" + option.name, label:"Strength: " + option.name + " (" + option.volume + ")", image:option.file, price:option.price || product[3], priceConfirmed:true};
+      return {key:"strength-" + option.name, label:"Strength: " + option.name + " (" + option.volume + ")", image:option.file, price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
     }
 
     if (currentId === "babalux-barber-hair-styling-powder-wax") {
       const option = powderWaxVariants[activeOptionIndex("[data-powder-wax-variant]")];
-      return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:option.file, price:option.price || product[3], priceConfirmed:true};
+      return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:option.file, price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
     }
 
     if (currentId === "threads-for-hair-fluted-500g") {
       const option = threadsHairVariants[activeOptionIndex("[data-threads-hair-variant]")];
-      return {key:"size-" + option.name, label:"Size " + option.name, image:product[4], price:option.price || product[3], priceConfirmed:true};
+      return {key:"size-" + option.name, label:"Size " + option.name, image:product[4], price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
     }
 
     return null;
@@ -756,8 +757,8 @@ const arkoVariants = [
 
     const badge = document.getElementById("variant-image-badge");
     if (badge) {
-      badge.textContent = selected && selected.label ? selected.label : "";
-      badge.style.display = selected && selected.label ? "block" : "none";
+      badge.textContent = selected && selected.showImageBadge ? selected.label : "";
+      badge.style.display = selected && selected.showImageBadge ? "block" : "none";
     }
     if (selected && selected.label) {
       document.querySelectorAll(".gallery-slide img").forEach(img => {
