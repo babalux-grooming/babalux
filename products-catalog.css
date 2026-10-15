@@ -86,3 +86,7 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0b1
 /* Footer navigation for customer shipping information */
 .footer-links{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:12px;color:#bdb6aa}
 .footer-links a:hover{color:#d6b774}
+
+/* Cart navigation badge */
+.nav-cart-link{display:inline-flex;align-items:center;gap:7px;color:#d6b774!important;white-space:nowrap}
+.cart-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border:1px solid rgba(214,183,116,.3);border-radius:50%;font-size:11px;padding:0 5px;color:#d6b774}
