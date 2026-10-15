@@ -179,10 +179,14 @@ section{padding:90px 0}.stats{padding:0;background:#151E30;border-block:1px soli
 .homepage-search-tools{margin:0 0 22px}
 .homepage-search-tools .catalog-search{display:block;width:100%;min-height:50px;border-radius:2px;outline-offset:3px}
 .catalog-search-status{color:#c8c1b5;font-size:13px;margin:-8px 0 22px}
-</style>
+
+ /* Cart navigation badge */
+ .nav-cart-link{display:inline-flex;align-items:center;gap:7px;color:#d6b774!important;white-space:nowrap}
+ .cart-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border:1px solid rgba(214,183,116,.3);border-radius:50%;font-size:11px;padding:0 5px;color:#d6b774}
+ </style>
 </head>
 <body>
-<header><div class="container nav"><a class="logo" href="#">BABALUX</a><ul class="nav-links"><li><a href="#collections">Collections</a></li><li><a href="index.html#products">Products</a></li><li><a href="#story">About</a></li></ul></div></header>
+<header><div class="container nav"><a class="logo" href="#">BABALUX</a><ul class="nav-links"><li><a href="#collections">Collections</a></li><li><a href="index.html#products">Products</a></li><li><a href="#story">About</a></li><li><a class="nav-cart-link" href="cart.html">Cart <span class="cart-count" data-cart-count>0</span></a></li></ul></div></header>
 <main>
 <section class="hero"><div class="container"><div class="hero-content"><div class="hero-brand"><img src="babalux-brand-logo.png" alt="BABALUX Professional Grooming & Beauty"></div><h1>Precision.<br>Luxury.<br>Confidence.</h1><p>Professional grooming tools presented with clear information, refined design and straightforward online shopping.</p><a class="button" href="index.html#products">Shop Products</a><a class="button button-outline" href="#collections">Explore Collections</a></div></div></section>
 <section class="stats"><div class="container stats-grid"><div class="stat"><strong>Professional</strong><span>Quality Tools</span></div><div class="stat"><strong>Precision</strong><span>Designed for Detail</span></div><div class="stat"><strong>BABALUX</strong><span>Professional Standard</span></div></div></section>
@@ -628,6 +632,7 @@ section{padding:90px 0}.stats{padding:0;background:#151E30;border-block:1px soli
 <footer><div class="container footer-inner"><div class="footer-logo">BABALUX</div><nav class="footer-links" aria-label="Footer links"><a href="shipping.html">Delivery &amp; Shipping</a></nav><div class="copyright">© 2026 BABALUX. All rights reserved.</div></div></footer>
 
 
+<script src="cart.js?v=20261015variants"></script>
 <script src="products-data.js?v=20261015search"></script>
 <script>
 (function () {
