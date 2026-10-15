@@ -96,7 +96,12 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0B1
 }
 
 
-</style>
+
+ /* Footer navigation for delivery information */
+ .footer-links{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:12px;color:#bdb6aa}
+ .footer-links a:hover{color:#d6b774}
+ @media(max-width:700px){.footer-links{justify-content:center}}
+ </style>
 </head>
 <body>
 <header>
@@ -120,6 +125,7 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0B1
 <footer>
   <div class="container footer-inner">
     <div class="footer-logo">BABALUX</div>
+    <nav class="footer-links" aria-label="Footer links"><a href="shipping.html">Delivery &amp; Shipping</a></nav>
     <div class="copyright">© 2026 BABALUX. All rights reserved.</div>
   </div>
 </footer>
