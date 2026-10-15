@@ -679,7 +679,7 @@ const arkoVariants = [
 
     if (currentId === "excellence-brushes") {
       const option = excellenceBrushVariants[activeOptionIndex("[data-excellence-colour]")];
-      return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:product[4], price:option.price || product[3], priceConfirmed:true, showImageBadge:false};
+      return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:product[4], price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
     }
 
     if (currentId === "marmara-barber-cologne-graffiti-no24-150ml") {
@@ -702,7 +702,7 @@ const arkoVariants = [
 
     if (currentId === "wax-heater-500cc") {
       const option = waxHeaterVariants[activeOptionIndex("[data-variant]")];
-      return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:option.file, price:option.price || product[3], priceConfirmed:true};
+      return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:option.file, price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
     }
 
     if (currentId === "arko-men-shaving-cream-100g") {
