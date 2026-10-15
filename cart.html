@@ -80,9 +80,10 @@
       <div id="cart-items" class="cart-items"></div>
       <aside id="cart-summary" class="cart-summary">
         <h2>Order summary</h2>
-        <div class="summary-row"><span>Subtotal</span><strong id="cart-subtotal">£0.00</strong></div>
+        <div class="summary-row"><span>Subtotal of priced items</span><strong id="cart-subtotal">£0.00</strong></div>
         <div class="summary-row"><span>Shipping</span><span>Shown before checkout</span></div>
         <div class="summary-row total"><span>Items total</span><strong id="cart-total">£0.00</strong></div>
+        <p class="shipping-note" id="cart-price-warning" hidden></p>
         <p class="shipping-note">Delivery fees and secure Stripe checkout are not enabled yet. No payment will be taken from this page.</p>
         <button class="checkout-button" type="button" disabled>Checkout not available yet</button>
         <a class="continue-button" href="index.html#products">Continue shopping</a>
@@ -111,17 +112,25 @@
       empty.classList.toggle("hidden", cart.length > 0);
       layout.classList.toggle("hidden", cart.length === 0);
 
+      const priceWarning = document.getElementById("cart-price-warning");
       if (!cart.length) {
         itemsWrap.innerHTML = "";
         document.getElementById("cart-subtotal").textContent = money.format(0);
         document.getElementById("cart-total").textContent = money.format(0);
+        if (priceWarning) {
+          priceWarning.hidden = true;
+          priceWarning.textContent = "";
+        }
         return;
       }
 
       itemsWrap.innerHTML = cart.map(item => {
         const qty = Math.max(1, Number(item.quantity) || 1);
+        const priceConfirmed = item.priceConfirmed !== false;
         const unit = Math.max(0, Number(item.unitPrice) || 0);
         const lineTotal = qty * unit;
+        const unitDisplay = priceConfirmed ? money.format(unit) + " each" : "Price to be confirmed";
+        const totalDisplay = priceConfirmed ? money.format(lineTotal) : "Price pending";
         return '<article class="cart-item">' +
           '<div class="cart-item-image-wrap"><img class="cart-item-image" src="' + escapeHtml(safeImageUrl(item.image || "")) + '" alt="' + escapeHtml(item.name || "BABALUX product") + '" loading="lazy">' +
             (item.variant ? '<span class="cart-item-variant-badge">' + escapeHtml(item.variant) + '</span>' : '') +
@@ -129,7 +138,7 @@
           '<div class="cart-item-info">' +
             '<h2 class="item-name">' + escapeHtml(item.name || "BABALUX product") + '</h2>' +
             (item.variant ? '<p class="item-variant">Selected: ' + escapeHtml(item.variant) + '</p>' : '') +
-            '<div class="item-price">' + money.format(unit) + ' each</div>' +
+            '<div class="item-price">' + unitDisplay + '</div>' +
             '<div class="item-actions">' +
               '<button class="qty-button" type="button" data-cart-action="decrease" data-cart-key="' + escapeHtml(item.key) + '" aria-label="Decrease quantity">−</button>' +
               '<span class="qty-number">' + qty + '</span>' +
@@ -137,13 +146,21 @@
               '<button class="remove-button" type="button" data-cart-action="remove" data-cart-key="' + escapeHtml(item.key) + '">Remove</button>' +
             '</div>' +
           '</div>' +
-          '<div class="line-total">' + money.format(lineTotal) + '</div>' +
+          '<div class="line-total">' + totalDisplay + '</div>' +
         '</article>';
       }).join("");
 
-      const subtotal = cart.reduce((sum, item) => sum + Math.max(0, Number(item.unitPrice) || 0) * Math.max(1, Number(item.quantity) || 1), 0);
+      const confirmedItems = cart.filter(item => item.priceConfirmed !== false);
+      const hasPendingPrice = cart.some(item => item.priceConfirmed === false);
+      const subtotal = confirmedItems.reduce((sum, item) => sum + Math.max(0, Number(item.unitPrice) || 0) * Math.max(1, Number(item.quantity) || 1), 0);
       document.getElementById("cart-subtotal").textContent = money.format(subtotal);
-      document.getElementById("cart-total").textContent = money.format(subtotal);
+      document.getElementById("cart-total").textContent = hasPendingPrice ? "Price confirmation needed" : money.format(subtotal);
+      if (priceWarning) {
+        priceWarning.hidden = !hasPendingPrice;
+        priceWarning.textContent = hasPendingPrice
+          ? "At least one selected option needs a confirmed price. It is saved in your cart, but your full total cannot be calculated yet."
+          : "";
+      }
     }
 
     document.addEventListener("click", event => {
