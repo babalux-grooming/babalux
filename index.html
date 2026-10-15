@@ -174,7 +174,12 @@ section{padding:90px 0}.stats{padding:0;background:#151E30;border-block:1px soli
  /* Footer navigation for delivery information */
  .footer-links{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:12px;color:#bdb6aa}
  .footer-links a:hover{color:#d6b774}
- </style>
+ 
+/* Restore homepage product search */
+.homepage-search-tools{margin:0 0 22px}
+.homepage-search-tools .catalog-search{display:block;width:100%;min-height:50px;border-radius:2px;outline-offset:3px}
+.catalog-search-status{color:#c8c1b5;font-size:13px;margin:-8px 0 22px}
+</style>
 </head>
 <body>
 <header><div class="container nav"><a class="logo" href="#">BABALUX</a><ul class="nav-links"><li><a href="#collections">Collections</a></li><li><a href="index.html#products">Products</a></li><li><a href="#story">About</a></li></ul></div></header>
@@ -191,6 +196,17 @@ section{padding:90px 0}.stats{padding:0;background:#151E30;border-block:1px soli
       </div>
       <p>Browse 25 products at a time and use the navigation at the bottom to continue through the full 124-product catalogue.</p>
     </div>
+    <div class="catalog-tools homepage-search-tools">
+      <input
+        class="catalog-search"
+        id="homepage-product-search"
+        type="search"
+        placeholder="Search all 124 products by name, category or details…"
+        aria-label="Search all BABALUX products"
+        autocomplete="off"
+      >
+    </div>
+    <p class="catalog-search-status" id="homepage-search-status" role="status" aria-live="polite" hidden></p>
     <div class="product-grid homepage-product-grid" id="product-grid">
 
 <article class="product-card">
@@ -610,6 +626,76 @@ section{padding:90px 0}.stats{padding:0;background:#151E30;border-block:1px soli
 <section class="cta"><div class="container"><div class="eyebrow">Discover BABALUX</div><h2>Precision starts here.</h2><p>Explore the current BABALUX collection of professional grooming tools.</p><a class="button" href="index.html#products">View Products</a></div></section>
 </main>
 <footer><div class="container footer-inner"><div class="footer-logo">BABALUX</div><nav class="footer-links" aria-label="Footer links"><a href="shipping.html">Delivery &amp; Shipping</a></nav><div class="copyright">© 2026 BABALUX. All rights reserved.</div></div></footer>
+
+
+<script src="products-data.js?v=20261015search"></script>
+<script>
+(function () {
+  const input = document.getElementById("homepage-product-search");
+  const grid = document.getElementById("product-grid");
+  const pagination = document.querySelector(".catalog-pagination");
+  const pageNote = document.querySelector(".catalog-page-note");
+  const status = document.getElementById("homepage-search-status");
+  if (!input || !grid || !status) return;
+
+  const defaultGrid = grid.innerHTML;
+  const allProducts = Array.isArray(window.BABALUX_PRODUCTS) ? window.BABALUX_PRODUCTS : [];
+
+  function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, function (ch) {
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
+    });
+  }
+
+  function productCard(p) {
+    const id = String(p[0] ?? "");
+    const title = String(p[1] ?? "");
+    const image = String(p[4] ?? "");
+    const imageMarkup = image
+      ? '<img src="' + escapeHtml(encodeURI(image)) + '" alt="' + escapeHtml(title) + '" loading="lazy">'
+      : '<div class="image-placeholder">Image coming soon</div>';
+    const link = "product.html?id=" + encodeURIComponent(id);
+    return '<article class="product-card">' +
+      '<a class="product-image product-link" href="' + link + '" aria-label="View ' + escapeHtml(title) + '">' + imageMarkup + '</a>' +
+      '<div class="product-info">' +
+        '<div class="product-category">' + escapeHtml(p[2] ?? "") + '</div>' +
+        '<h3><a class="product-title-link" href="' + link + '">' + escapeHtml(title) + '</a></h3>' +
+        '<p class="product-description">' + escapeHtml(p[5] ?? "") + '</p>' +
+        '<div class="product-meta">' + (Array.isArray(p[6]) ? p[6] : []).slice(0, 5).map(function (tag) { return '<span class="meta-pill">' + escapeHtml(tag) + '</span>'; }).join("") + '</div>' +
+        '<div class="product-bottom"><div class="price">' + escapeHtml(p[3] ?? "") + '</div><a class="buy-button" href="' + link + '">View</a></div>' +
+      '</div></article>';
+  }
+
+  input.addEventListener("input", function () {
+    const query = input.value.trim().toLocaleLowerCase();
+    if (!query) {
+      grid.innerHTML = defaultGrid;
+      if (pagination) pagination.hidden = false;
+      if (pageNote) pageNote.hidden = false;
+      status.hidden = true;
+      status.textContent = "";
+      return;
+    }
+
+    const matches = allProducts.filter(function (p) {
+      return [p[0], p[1], p[2], p[5], ...(Array.isArray(p[6]) ? p[6] : [])]
+        .join(" ")
+        .toLocaleLowerCase()
+        .includes(query);
+    });
+
+    grid.innerHTML = matches.length
+      ? matches.map(productCard).join("")
+      : '<p class="no-results">No products found. Try another search.</p>';
+    if (pagination) pagination.hidden = true;
+    if (pageNote) pageNote.hidden = true;
+    status.hidden = false;
+    status.textContent = matches.length
+      ? matches.length + " product" + (matches.length === 1 ? "" : "s") + " found."
+      : "No matching products.";
+  });
+})();
+</script>
 
 </body>
 </html>
