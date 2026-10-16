@@ -43,7 +43,9 @@
     .summary-row.total{padding-top:14px;margin-top:16px;border-top:1px solid rgba(214,183,116,.17);font-weight:700;color:#f5ead1;font-size:17px}
     .shipping-note{font-size:12px;color:#99938a;margin:16px 0}
     .checkout-button,.continue-button{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 18px;font:700 11px "DM Sans",Arial,sans-serif;text-transform:uppercase;letter-spacing:1px}
-    .checkout-button{width:100%;border:1px solid #5f626c;background:#343b4a;color:#b5b4ba;cursor:not-allowed}
+    .checkout-button{width:100%;border:1px solid #d6b774;background:#d6b774;color:#111;cursor:pointer}
+    .checkout-button:disabled{border-color:#5f626c;background:#343b4a;color:#b5b4ba;cursor:not-allowed}
+    .checkout-feedback{font-size:13px;color:#d6b774;line-height:1.5;overflow-wrap:anywhere}
     .continue-button{border:1px solid #d6b774;background:#d6b774;color:#111;margin-top:12px}
     .empty-cart{padding:36px 22px;text-align:center;border:1px dashed rgba(214,183,116,.3);background:#192337}
     .empty-cart h2{margin:0 0 8px;font-size:28px}
@@ -84,8 +86,9 @@
         <div class="summary-row"><span>Shipping</span><span>Shown before checkout</span></div>
         <div class="summary-row total"><span>Items subtotal</span><strong id="cart-total">£0.00</strong></div>
         <p class="shipping-note" id="cart-price-warning" hidden></p>
-        <p class="shipping-note">Delivery fees and secure Stripe checkout are not enabled yet. No payment will be taken from this page.</p>
-        <button class="checkout-button" type="button" disabled>Checkout not available yet</button>
+        <p class="shipping-note">TEST MODE ONLY: checkout uses Stripe test payments and collects a UK shipping address. No real payment will be taken. Delivery pricing and live orders still need to be finalised.</p>
+        <button class="checkout-button" id="checkout-button" type="button" disabled>Preparing test checkout…</button>
+        <p class="checkout-feedback" id="checkout-feedback" role="status" aria-live="polite"></p>
         <a class="continue-button" href="index.html#products">Continue shopping</a>
       </aside>
     </div>
@@ -113,6 +116,8 @@
       layout.classList.toggle("hidden", cart.length === 0);
 
       const priceWarning = document.getElementById("cart-price-warning");
+      const checkoutButton = document.getElementById("checkout-button");
+      const checkoutFeedback = document.getElementById("checkout-feedback");
       if (!cart.length) {
         itemsWrap.innerHTML = "";
         document.getElementById("cart-subtotal").textContent = money.format(0);
@@ -120,6 +125,10 @@
         if (priceWarning) {
           priceWarning.hidden = true;
           priceWarning.textContent = "";
+        }
+        if (checkoutButton) {
+          checkoutButton.disabled = true;
+          checkoutButton.textContent = "Cart is empty";
         }
         return;
       }
@@ -161,6 +170,15 @@
           ? "At least one selected option needs a confirmed price. It is saved in your cart, but your full total cannot be calculated yet."
           : "";
       }
+      if (checkoutButton) {
+        checkoutButton.disabled = hasPendingPrice;
+        checkoutButton.textContent = hasPendingPrice ? "Price confirmation needed" : "Proceed to checkout (test mode)";
+      }
+      if (checkoutFeedback && !checkoutButton?.dataset.loading) {
+        checkoutFeedback.textContent = hasPendingPrice
+          ? "Remove or change any option marked Price pending before testing checkout."
+          : "";
+      }
     }
 
     document.addEventListener("click", event => {
@@ -183,6 +201,50 @@
       window.saveBabaluxCart(cart);
       renderCart();
     });
+
+
+    const checkoutButton = document.getElementById("checkout-button");
+    const checkoutFeedback = document.getElementById("checkout-feedback");
+
+    if (checkoutButton) {
+      checkoutButton.addEventListener("click", async () => {
+        const cart = window.getBabaluxCart();
+        if (!cart.length || cart.some(item => item.priceConfirmed === false)) {
+          renderCart();
+          return;
+        }
+
+        checkoutButton.disabled = true;
+        checkoutButton.dataset.loading = "true";
+        checkoutButton.textContent = "Opening Stripe test checkout…";
+        if (checkoutFeedback) checkoutFeedback.textContent = "Connecting securely to Stripe test mode…";
+
+        try {
+          const response = await fetch("/.netlify/functions/create-checkout-session", {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({
+              items: cart.map(item => ({
+                id: item.id,
+                key: item.key,
+                quantity: item.quantity
+              }))
+            })
+          });
+
+          let payload = {};
+          try { payload = await response.json(); } catch {}
+          if (!response.ok || !payload.url) {
+            throw new Error(payload.error || "Stripe could not start checkout. Please try again.");
+          }
+          window.location.assign(payload.url);
+        } catch (error) {
+          if (checkoutFeedback) checkoutFeedback.textContent = error.message || "Checkout failed. Please try again.";
+          delete checkoutButton.dataset.loading;
+          renderCart();
+        }
+      });
+    }
 
     window.addEventListener("babalux-cart-updated", renderCart);
     renderCart();
