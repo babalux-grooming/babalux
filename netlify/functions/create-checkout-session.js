@@ -745,7 +745,7 @@ exports.handler = async function (event) {
 
   // Keep this integration in Stripe test mode until the client confirms shipping charges and fulfilment.
   const stripeSecret = process.env.STRIPE_SECRET_KEY || "";
-  if (!stripeSecret.startsWith("sk_test_")) {
+  if (!stripeSecret.startsWith("sk_test_") && !stripeSecret.startsWith("rk_test_")) {
     return reply(503, {error:"Stripe test mode is not configured yet. Please try again after setup is complete."}, origin);
   }
 
