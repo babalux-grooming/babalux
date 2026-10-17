@@ -743,9 +743,19 @@ exports.handler = async function (event) {
 
   if (String(event.body || "").length > 30000) return reply(413, {error:"Your cart is too large to process."}, origin);
 
-  // Keep this integration in Stripe test mode until the client confirms shipping charges and fulfilment.
-  const stripeSecret = process.env.STRIPE_SECRET_KEY || "";
-  if (!stripeSecret.startsWith("sk_test_") && !stripeSecret.startsWith("rk_test_")) {
+  // Test checkout remains the default. Live checkout requires an explicit environment flag
+  // and a separate live secret key; never overwrite the working test key to enable live payments.
+  const liveCheckoutEnabled = process.env.STRIPE_LIVE_CHECKOUT_ENABLED === "true";
+  const stripeSecret = liveCheckoutEnabled
+    ? (process.env.STRIPE_SECRET_KEY_LIVE || "")
+    : (process.env.STRIPE_SECRET_KEY_TEST || process.env.STRIPE_SECRET_KEY || "");
+  const isLiveSecret = stripeSecret.startsWith("sk_live_") || stripeSecret.startsWith("rk_live_");
+  const isTestSecret = stripeSecret.startsWith("sk_test_") || stripeSecret.startsWith("rk_test_");
+
+  if (liveCheckoutEnabled && !isLiveSecret) {
+    return reply(503, {error:"Live checkout is enabled, but a valid live Stripe key is not configured."}, origin);
+  }
+  if (!liveCheckoutEnabled && !isTestSecret) {
     return reply(503, {error:"Stripe test mode is not configured yet. Please try again after setup is complete."}, origin);
   }
 
@@ -760,11 +770,11 @@ exports.handler = async function (event) {
   form.set("mode", "payment");
   form.set("billing_address_collection", "auto");
   form.set("shipping_address_collection[allowed_countries][0]", "GB");
-  form.set("success_url", origin + "/checkout-success.html?session_id={CHECKOUT_SESSION_ID}");
+  form.set("success_url", origin + "/checkout-success.html?session_id={CHECKOUT_SESSION_ID}&mode=" + (liveCheckoutEnabled ? "live" : "test"));
   form.set("cancel_url", origin + "/cart.html?checkout=cancelled");
   form.set("submit_type", "pay");
   form.set("metadata[store]", "BABALUX");
-  form.set("metadata[checkout_environment]", "test");
+  form.set("metadata[checkout_environment]", liveCheckoutEnabled ? "live" : "test");
 
   items.forEach((item, index) => {
     form.set("line_items[" + index + "][quantity]", String(item.quantity));
