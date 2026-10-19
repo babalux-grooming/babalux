@@ -668,9 +668,8 @@ function reply(statusCode, payload, origin) {
 }
 
 function getRequestOrigin(event) {
-  const host = String(event.headers?.host || event.headers?.Host || "").split(":")[0].toLowerCase();
-  if (host !== NETLIFY_FUNCTION_HOST) return null;
-
+  // Netlify may normalize or omit the Host header for function events.
+  // Validate the browser Origin against the explicit allow-list instead of relying on Host.
   const originHeader = event.headers?.origin || event.headers?.Origin || "";
   if (!originHeader) return null;
 
