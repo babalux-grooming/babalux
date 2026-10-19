@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <title>Test Checkout Return | BABALUX</title>
+  <title>Checkout status | BABALUX</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
@@ -38,10 +38,10 @@
   </header>
   <main class="container">
     <section class="panel">
-      <p class="eyebrow">Checkout test</p>
-      <h1>Thank you for testing BABALUX.</h1>
-      <p>You've returned from Stripe's test checkout. This is a testing environment only; no real payment has been taken.</p>
-      <div class="notice">Before the shop goes live, BABALUX will need to confirm delivery charges and arrangements, then verify successful payments before preparing orders.</div>
+      <p class="eyebrow" id="success-eyebrow">Checking payment</p>
+      <h1 id="success-heading">Checking your checkout…</h1>
+      <p id="success-message">Please wait while BABALUX verifies the payment status with Stripe. Do not submit the same order again while this check is in progress.</p>
+      <div class="notice" id="success-notice">If this page cannot verify your payment, check your Stripe receipt or contact BABALUX before attempting another payment.</div>
       <div class="actions">
         <a class="button" href="index.html#products">Continue shopping</a>
         <a class="button secondary" href="cart.html">Return to cart</a>
@@ -49,5 +49,54 @@
     </section>
   </main>
   <footer><div class="container">© 2026 BABALUX. Checkout test environment only.</div></footer>
+  <script>
+    (async function verifyCheckoutReturn() {
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get("session_id") || "";
+      const mode = params.get("mode") === "live" ? "live" : "test";
+      const eyebrow = document.getElementById("success-eyebrow");
+      const heading = document.getElementById("success-heading");
+      const message = document.getElementById("success-message");
+      const notice = document.getElementById("success-notice");
+
+      if (!sessionId) {
+        eyebrow.textContent = "Payment not verified";
+        heading.textContent = "We couldn't verify this checkout.";
+        message.textContent = "This page is missing the checkout reference. Please check your Stripe receipt or contact BABALUX before trying again.";
+        notice.textContent = "Do not submit the same order again until you know whether the payment completed.";
+        return;
+      }
+
+      try {
+        const endpoint = "https://twilight-mouse-c37e.arthur-mondoy12.workers.dev";
+        const response = await fetch(endpoint + "?action=verify-session&mode=" + encodeURIComponent(mode) + "&session_id=" + encodeURIComponent(sessionId));
+        const result = await response.json();
+        if (!response.ok || !result.verified) {
+          eyebrow.textContent = "Payment not confirmed";
+          heading.textContent = "Your payment hasn't been confirmed.";
+          message.textContent = "Stripe has not reported a completed payment for this checkout session.";
+          notice.textContent = "If you believe you have been charged, check your Stripe receipt or contact BABALUX before trying again.";
+          return;
+        }
+
+        if (mode === "test") {
+          eyebrow.textContent = "Checkout test";
+          heading.textContent = "Thank you for testing BABALUX.";
+          message.textContent = "Stripe confirmed this test payment. No real money was taken.";
+          notice.textContent = "This was a test order only; no goods will be dispatched.";
+        } else {
+          eyebrow.textContent = "Payment confirmed";
+          heading.textContent = "Thank you for your order.";
+          message.textContent = "Stripe has confirmed your payment of " + new Intl.NumberFormat("en-GB", {style:"currency",currency:result.currency || "GBP"}).format((Number(result.amountTotal) || 0) / 100) + ".";
+          notice.textContent = "Please keep your order confirmation. BABALUX will process your order according to the published delivery terms.";
+        }
+      } catch {
+        eyebrow.textContent = "Payment status unavailable";
+        heading.textContent = "We couldn't check the payment yet.";
+        message.textContent = "The payment status couldn't be verified right now.";
+        notice.textContent = "Please check your Stripe receipt or contact BABALUX before making another payment.";
+      }
+    })();
+  </script>
 </body>
 </html>
