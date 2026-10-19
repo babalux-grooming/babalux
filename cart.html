@@ -200,12 +200,12 @@
         checkoutButton.textContent = hasPendingPrice
           ? "Price confirmation needed"
           : deliveryQuote
-            ? "Proceed to checkout (test mode)"
+            ? "Proceed to checkout"
             : "Calculate delivery first";
       }
       if (checkoutFeedback && !checkoutButton?.dataset.loading && !deliveryQuote) {
         checkoutFeedback.textContent = hasPendingPrice
-          ? "Remove or change any option marked Price pending before testing checkout."
+          ? "Remove or change any option marked Price pending before checkout."
           : "Enter your delivery postcode and click Calculate before checkout.";
       }
     }
@@ -293,8 +293,8 @@
 
         checkoutButton.disabled = true;
         checkoutButton.dataset.loading = "true";
-        checkoutButton.textContent = "Opening Stripe test checkout…";
-        if (checkoutFeedback) checkoutFeedback.textContent = "Connecting securely to Stripe test mode…";
+        checkoutButton.textContent = "Opening secure checkout…";
+        if (checkoutFeedback) checkoutFeedback.textContent = "Connecting securely to Stripe…";
 
         try {
           const response = await fetch("https://twilight-mouse-c37e.arthur-mondoy12.workers.dev", {
