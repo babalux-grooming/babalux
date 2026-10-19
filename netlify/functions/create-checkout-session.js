@@ -743,7 +743,8 @@ function parseCart(rawBody) {
 exports.handler = async function (event) {
   if (event.httpMethod === "OPTIONS") {
     const origin = getRequestOrigin(event);
-    return reply(origin ? 204 : 403, {}, origin);
+    // Return a regular 200 response for browser CORS preflight, with no special 204-body handling.
+    return reply(origin ? 200 : 403, {ok: Boolean(origin)}, origin);
   }
   if (event.httpMethod !== "POST") return reply(405, {error:"Use POST to create a checkout session."});
 
