@@ -673,6 +673,40 @@ function getRequestOrigin(request) {
   }
 }
 
+async function getShippingQuote(rawPostcode) {
+  const input = String(rawPostcode || "").trim().toUpperCase().replace(/\s+/g, " ");
+  if (input.length < 5 || input.length > 8) {
+    throw new Error("Enter a valid UK mainland postcode to calculate delivery.");
+  }
+  let response;
+  try {
+    response = await fetch("https://api.postcodes.io/postcodes/" + encodeURIComponent(input.replace(/\s+/g, "")));
+  } catch {
+    throw new Error("We couldn't check that postcode right now. Please try again.");
+  }
+  if (!response.ok) throw new Error("That postcode couldn't be verified. Check it and try again.");
+  const data = await response.json();
+  const place = data?.result;
+  if (!place || !["England", "Scotland", "Wales"].includes(place.country)) {
+    throw new Error("BABALUX currently delivers to mainland England, Scotland and Wales only.");
+  }
+  const excludedDistricts = new Set([
+    "Isle of Wight", "Orkney Islands", "Shetland Islands", "Na h-Eileanan Siar",
+    "Isle of Anglesey", "Anglesey"
+  ]);
+  if (excludedDistricts.has(String(place.admin_district || ""))) {
+    throw new Error("That postcode is outside our mainland delivery area at the moment.");
+  }
+  const zone = place.region === "West Midlands" ? "West Midlands" : "Rest of mainland UK";
+  const feePence = zone === "West Midlands" ? 499 : 699;
+  return {
+    postcode: place.postcode,
+    zone,
+    feePence,
+    label: zone === "West Midlands" ? "West Midlands delivery" : "Mainland UK delivery"
+  };
+}
+
 function parseCart(rawBody) {
   let body;
   try {
@@ -731,16 +765,62 @@ function parseCart(rawBody) {
 export default {
   async fetch(request, env) {
     const origin = getRequestOrigin(request);
+    const url = new URL(request.url);
 
     if (request.method === "OPTIONS") {
       if (!origin) return reply(403, { error: "Origin not allowed." }, null);
       return reply(200, { ok: true }, origin);
     }
 
+    if (request.method === "GET" && url.searchParams.get("action") === "shipping-quote") {
+      if (!origin) return reply(403, { error: "Origin not allowed." }, null);
+      try {
+        const quote = await getShippingQuote(url.searchParams.get("postcode"));
+        return reply(200, quote, origin);
+      } catch (error) {
+        return reply(400, { error: error?.message || "We couldn't calculate delivery." }, origin);
+      }
+    }
+
+    if (request.method === "GET" && url.searchParams.get("action") === "verify-session") {
+      if (!origin) return reply(403, { error: "Origin not allowed." }, null);
+      const sessionId = String(url.searchParams.get("session_id") || "");
+      const mode = url.searchParams.get("mode") === "live" ? "live" : "test";
+      if (!/^cs_(test|live)_[A-Za-z0-9_]+$/.test(sessionId) ||
+          (mode === "live" && !sessionId.startsWith("cs_live_")) ||
+          (mode === "test" && !sessionId.startsWith("cs_test_"))) {
+        return reply(400, { error: "The checkout session could not be verified." }, origin);
+      }
+      const stripeSecret = mode === "live"
+        ? (env.STRIPE_SECRET_KEY_LIVE || "")
+        : (env.STRIPE_SECRET_KEY_TEST || env.STRIPE_SECRET_KEY || "");
+      const validKey = mode === "live"
+        ? (stripeSecret.startsWith("sk_live_") || stripeSecret.startsWith("rk_live_"))
+        : (stripeSecret.startsWith("sk_test_") || stripeSecret.startsWith("rk_test_"));
+      if (!validKey) return reply(503, { error: "Payment verification is not configured." }, origin);
+      try {
+        const stripeResponse = await fetch("https://api.stripe.com/v1/checkout/sessions/" + encodeURIComponent(sessionId), {
+          headers: { "Authorization": "Bearer " + stripeSecret }
+        });
+        const stripeSession = await stripeResponse.json();
+        if (!stripeResponse.ok) return reply(502, { error: "Stripe couldn't verify this checkout session." }, origin);
+        const verified = stripeSession.status === "complete" && stripeSession.payment_status === "paid";
+        return reply(200, {
+          verified,
+          mode,
+          status: stripeSession.status || "unknown",
+          paymentStatus: stripeSession.payment_status || "unknown",
+          amountTotal: Number(stripeSession.amount_total || 0),
+          currency: String(stripeSession.currency || "gbp").toUpperCase()
+        }, origin);
+      } catch {
+        return reply(502, { error: "We couldn't reach Stripe to verify this payment." }, origin);
+      }
+    }
+
     if (request.method !== "POST") {
       return reply(405, { error: "Use POST to create a checkout session." }, origin);
     }
-
     if (!origin) {
       return reply(403, { error: "This checkout request was not recognised. Please refresh the BABALUX site." }, null);
     }
@@ -751,12 +831,8 @@ export default {
     } catch {
       return reply(400, { error: "The cart could not be read. Please refresh and try again." }, origin);
     }
+    if (rawBody.length > 30000) return reply(413, { error: "Your cart is too large to process." }, origin);
 
-    if (rawBody.length > 30000) {
-      return reply(413, { error: "Your cart is too large to process." }, origin);
-    }
-
-    // Live checkout remains disabled unless the environment flag and a live Stripe key are explicitly set.
     const liveCheckoutEnabled = env.STRIPE_LIVE_CHECKOUT_ENABLED === "true";
     const stripeSecret = liveCheckoutEnabled
       ? (env.STRIPE_SECRET_KEY_LIVE || "")
@@ -771,22 +847,35 @@ export default {
       return reply(503, { error: "Stripe test mode is not configured yet. Please try again after setup is complete." }, origin);
     }
 
+    let checkoutBody;
     let items;
     try {
+      checkoutBody = JSON.parse(rawBody || "{}");
       items = parseCart(rawBody);
     } catch (error) {
-      return reply(400, { error: error.message }, origin);
+      return reply(400, { error: error?.message || "The cart could not be read." }, origin);
+    }
+    let shippingQuote;
+    try {
+      shippingQuote = await getShippingQuote(checkoutBody.postcode);
+    } catch (error) {
+      return reply(400, { error: error?.message || "We couldn't calculate delivery." }, origin);
     }
 
     const form = new URLSearchParams();
     form.set("mode", "payment");
     form.set("billing_address_collection", "auto");
     form.set("shipping_address_collection[allowed_countries][0]", "GB");
+    form.set("shipping_options[0][shipping_rate_data][type]", "fixed_amount");
+    form.set("shipping_options[0][shipping_rate_data][fixed_amount][amount]", String(shippingQuote.feePence));
+    form.set("shipping_options[0][shipping_rate_data][fixed_amount][currency]", "gbp");
+    form.set("shipping_options[0][shipping_rate_data][display_name]", shippingQuote.label);
     form.set("success_url", origin + "/checkout-success.html?session_id={CHECKOUT_SESSION_ID}&mode=" + (liveCheckoutEnabled ? "live" : "test"));
     form.set("cancel_url", origin + "/cart.html?checkout=cancelled");
     form.set("submit_type", "pay");
     form.set("metadata[store]", "BABALUX");
     form.set("metadata[checkout_environment]", liveCheckoutEnabled ? "live" : "test");
+    form.set("metadata[delivery_zone]", shippingQuote.zone);
 
     items.forEach((item, index) => {
       form.set("line_items[" + index + "][quantity]", String(item.quantity));
@@ -807,16 +896,14 @@ export default {
         },
         body: form.toString()
       });
-
       const stripeBody = await stripeResponse.json();
       if (!stripeResponse.ok) {
         console.error("Stripe Checkout Session creation failed:", stripeBody?.error?.type || "unknown error", stripeBody?.error?.message || "");
-        return reply(502, { error: "Stripe could not start checkout. Please check the test account setup and try again." }, origin);
+        return reply(502, { error: "Stripe could not start checkout. Please check the Stripe account setup and try again." }, origin);
       }
       if (!stripeBody.url) {
         return reply(502, { error: "Stripe did not return a checkout link. Please try again." }, origin);
       }
-
       return reply(200, { url: stripeBody.url }, origin);
     } catch (error) {
       console.error("Checkout request failed:", error?.message || "unknown error");
