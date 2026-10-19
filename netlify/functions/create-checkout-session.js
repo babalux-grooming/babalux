@@ -641,39 +641,48 @@ const VARIANTS = {
   }
 };
 
-const ALLOWED_HOSTS = new Set([
-  "premium-grooming-preview-uk.netlify.app",
-  "babalux.uk",
-  "www.babalux.uk"
+const NETLIFY_FUNCTION_HOST = "premium-grooming-preview-uk.netlify.app";
+const ALLOWED_ORIGINS = new Set([
+  "https://premium-grooming-preview-uk.netlify.app",
+  "https://babalux.uk",
+  "https://www.babalux.uk"
 ]);
 
 function reply(statusCode, payload, origin) {
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "Cache-Control": "no-store",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Max-Age": "86400",
+    "Vary": "Origin"
+  };
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    headers["Access-Control-Allow-Origin"] = origin;
+  }
   return {
     statusCode,
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "no-store",
-      "Access-Control-Allow-Origin": origin || "https://premium-grooming-preview-uk.netlify.app",
-      "Vary": "Origin"
-    },
+    headers,
     body: JSON.stringify(payload)
   };
 }
 
-function getSiteOrigin(event) {
+function getRequestOrigin(event) {
   const host = String(event.headers?.host || event.headers?.Host || "").split(":")[0].toLowerCase();
-  if (!ALLOWED_HOSTS.has(host)) return null;
-  const expectedOrigin = "https://" + host;
+  if (host !== NETLIFY_FUNCTION_HOST) return null;
+
   const originHeader = event.headers?.origin || event.headers?.Origin || "";
-  if (originHeader) {
-    try {
-      const parsed = new URL(originHeader);
-      if (parsed.protocol !== "https:" || parsed.host.toLowerCase() !== host) return null;
-    } catch {
+  if (!originHeader) return null;
+
+  try {
+    const parsed = new URL(originHeader);
+    if (parsed.protocol !== "https:" || parsed.origin !== originHeader || !ALLOWED_ORIGINS.has(parsed.origin)) {
       return null;
     }
+    return parsed.origin;
+  } catch {
+    return null;
   }
-  return expectedOrigin;
 }
 
 function parseCart(rawBody) {
@@ -733,12 +742,12 @@ function parseCart(rawBody) {
 
 exports.handler = async function (event) {
   if (event.httpMethod === "OPTIONS") {
-    const origin = getSiteOrigin(event);
+    const origin = getRequestOrigin(event);
     return reply(origin ? 204 : 403, {}, origin);
   }
   if (event.httpMethod !== "POST") return reply(405, {error:"Use POST to create a checkout session."});
 
-  const origin = getSiteOrigin(event);
+  const origin = getRequestOrigin(event);
   if (!origin) return reply(403, {error:"This checkout request was not recognised. Please refresh the BABALUX site."});
 
   if (String(event.body || "").length > 30000) return reply(413, {error:"Your cart is too large to process."}, origin);
