@@ -33,6 +33,14 @@
       <p class="page-summary" id="catalog-count">Loading catalogue…</p>
     </div>
 
+    <form class="catalogue-search" id="catalogue-search" role="search" onsubmit="return false;">
+      <label class="sr-only" for="catalogue-search-input">Search all BABALUX products</label>
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <input id="catalogue-search-input" type="search" placeholder="Search all products by name, category or details…" autocomplete="off" aria-controls="product-grid">
+      <button id="catalogue-search-clear" type="button" hidden>Clear</button>
+    </form>
+    <p class="search-status" id="catalogue-search-status" role="status" aria-live="polite"></p>
+
     <div class="product-grid" id="product-grid"></div>
 
     <nav class="pagination" id="pagination" aria-label="Product catalogue pages"></nav>
