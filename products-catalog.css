@@ -90,3 +90,27 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0b1
 /* Cart navigation badge */
 .nav-cart-link{display:inline-flex;align-items:center;gap:7px;color:#d6b774!important;white-space:nowrap}
 .cart-count{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;border:1px solid rgba(214,183,116,.3);border-radius:50%;font-size:11px;padding:0 5px;color:#d6b774}
+
+
+/* Global catalogue search */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.catalogue-search{display:flex;align-items:center;gap:12px;width:min(100%,720px);min-height:58px;margin:-8px 0 14px;padding:0 18px;background:#192337;border:1px solid rgba(214,183,116,.35);transition:border-color .2s,box-shadow .2s}
+.catalogue-search:focus-within{border-color:#d6b774;box-shadow:0 0 0 3px rgba(214,183,116,.12)}
+.catalogue-search .search-icon{font-size:28px;line-height:1;color:#d6b774;transform:rotate(-20deg)}
+.catalogue-search input{flex:1;min-width:0;min-height:54px;border:0;outline:0;background:transparent;color:#f4f0e8;font:400 15px "DM Sans",Arial,sans-serif}
+.catalogue-search input::placeholder{color:#99938a;opacity:1}
+.catalogue-search input::-webkit-search-cancel-button{cursor:pointer}
+.catalogue-search button{border:1px solid rgba(214,183,116,.35);background:transparent;color:#d6b774;padding:8px 12px;font:600 12px "DM Sans",Arial,sans-serif;cursor:pointer}
+.catalogue-search button:hover{background:#d6b774;color:#111}
+.search-status{min-height:0;margin:0 0 18px;color:#d6b774;font-size:13px}
+.search-status:empty{display:none}
+.search-empty{grid-column:1/-1;display:flex;flex-direction:column;gap:8px;padding:36px 24px;border:1px solid rgba(214,183,116,.18);background:#192337;color:#f4f0e8;text-align:center}
+.search-empty strong{font:600 24px "Playfair Display",Georgia,serif}
+.search-empty span{color:#99938a;font-size:14px}
+.pagination[hidden],.pagination-label[hidden],.catalogue-search button[hidden]{display:none!important}
+@media(max-width:780px){
+  .catalogue-search{width:100%;min-height:52px;margin:0 0 12px;padding:0 12px;gap:9px}
+  .catalogue-search input{min-height:48px;font-size:13px}
+  .catalogue-search .search-icon{font-size:24px}
+  .catalogue-search button{padding:7px 9px}
+}

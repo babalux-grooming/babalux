@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="products-catalog.css?v=20261015variants">
+<link rel="stylesheet" href="products-catalog.css?v=20261020search">
 </head>
 <body data-page="2">
 <header>
@@ -33,6 +33,14 @@
       <p class="page-summary" id="catalog-count">Loading catalogue…</p>
     </div>
 
+    <form class="catalogue-search" id="catalogue-search" role="search" onsubmit="return false;">
+      <label class="sr-only" for="catalogue-search-input">Search all BABALUX products</label>
+      <span class="search-icon" aria-hidden="true">⌕</span>
+      <input id="catalogue-search-input" type="search" placeholder="Search all products by name, category or details…" autocomplete="off" aria-controls="product-grid">
+      <button id="catalogue-search-clear" type="button" hidden>Clear</button>
+    </form>
+    <p class="search-status" id="catalogue-search-status" role="status" aria-live="polite"></p>
+
     <div class="product-grid" id="product-grid"></div>
 
     <nav class="pagination" id="pagination" aria-label="Product catalogue pages"></nav>
@@ -49,6 +57,6 @@
 </footer>
 <script src="cart.js?v=20261015variants"></script>
 <script src="products-data.js?v=20261007"></script>
-<script src="products-catalog.js?v=20261007"></script>
+<script src="products-catalog.js?v=20261020search"></script>
 </body>
 </html>
