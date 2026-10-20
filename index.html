@@ -175,6 +175,12 @@ section{padding:90px 0}.stats{padding:0;background:#151E30;border-block:1px soli
  .footer-links{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font-size:12px;color:#bdb6aa}
  .footer-links a:hover{color:#d6b774}
  
+/* Category shortcuts above homepage catalogue products */
+.homepage-category-links{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 24px;padding:0}
+.homepage-category-links a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:8px 13px;border:1px solid rgba(214,183,116,.28);background:#192337;color:#f4f0e8;font-size:12px;font-weight:600;transition:background .15s,border-color .15s,color .15s}
+.homepage-category-links a:hover,.homepage-category-links a:focus-visible{background:#d6b774;border-color:#d6b774;color:#111;outline-offset:3px}
+@media(max-width:700px){.homepage-category-links{gap:7px;margin-bottom:18px}.homepage-category-links a{flex:1 1 calc(33.333% - 7px);padding:8px 6px;font-size:11px;text-align:center}}
+
 /* Restore homepage product search */
 .homepage-search-tools{margin:0 0 22px}
 .homepage-search-tools .catalog-search{display:block;width:100%;min-height:50px;border-radius:2px;outline-offset:3px}
@@ -226,6 +232,16 @@ section{padding:90px 0}.stats{padding:0;background:#151E30;border-block:1px soli
         autocomplete="off"
       >
     </div>
+    <nav class="homepage-category-links" aria-label="Browse product categories">
+      <a href="collection.html?type=clippers">Clippers</a>
+      <a href="collection.html?type=scissors">Scissors</a>
+      <a href="collection.html?type=razors">Razors</a>
+      <a href="collection.html?type=combs">Combs</a>
+      <a href="collection.html?type=wax">Hair Wax</a>
+      <a href="collection.html?type=shaving">Shaving Products</a>
+      <a href="collection.html?type=accessories">Accessories</a>
+      <a href="products-1.html">All Products</a>
+    </nav>
     <p class="catalog-search-status" id="homepage-search-status" role="status" aria-live="polite" hidden></p>
     <div class="product-grid homepage-product-grid" id="product-grid">
 
