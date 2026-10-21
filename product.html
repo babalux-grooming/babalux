@@ -143,7 +143,7 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0B1
 </footer>
 
 <script src="cart.js?v=20261015variants"></script>
-<script src="products-data.js?v=20261021hairwax02gallery1"></script>
+<script src="products-data.js?v=20261021jytopdonutsizes1"></script>
 <script>
 const products = window.BABALUX_PRODUCTS || [];
 
@@ -176,6 +176,14 @@ const sizeVariantConfigs = {
     label: "Choose size",
     variants: [{value:"6.0",label:"6.0 inches"},{value:"6.5",label:"6.5 inches"},{value:"7.0",label:"7.0 inches"}]
   }
+  , "jytop-1-piece-extra-large-black-donut-maker": {
+    label: "Choose size",
+    variants: [
+      {value:"small",label:"Small",image:"JYTOP Black Hair Donut Maker Small.jpg",showImageBadge:false},
+      {value:"medium",label:"Medium",image:"JYTOP Black Hair Donut Maker Medium.jpg",showImageBadge:false},
+      {value:"large",label:"Large",image:"JYTOP Black Hair Donut Maker Large.jpg",showImageBadge:false}
+    ]
+  }
 };
 const excellenceBrushVariants = [
   {name:"Gold"},
@@ -200,6 +208,7 @@ if (!product) {
 } else {
   document.title = `BABALUX | ${product[1]}`;
   const galleries = {
+  "jytop-1-piece-extra-large-black-donut-maker": ["JYTOP Black Hair Donut Maker Collection.jpg","JYTOP Black Hair Donut Maker Small.jpg","JYTOP Black Hair Donut Maker Medium.jpg","JYTOP Black Hair Donut Maker Large.jpg"],
   "marmara-barber-cologne-graffiti-no24-150ml": ["Barber Marmara No. 24 Amber Cologne Display.png"],
   "threads-for-hair-fluted-500g": ["Luxury Hair Grips on Marble.png","Glossy Black Hairpins in a Crinkled Liner.png"],
   "babalux-barber-hair-styling-powder-wax": ["BABALUX Blue Barber Wax Showcase.png","BABALUX Red Powder Wax NEW.png","BABALUX Barber Powder Wax Display.png"],
@@ -340,7 +349,7 @@ const arkoVariants = [
   let galleryImages = product[0] === "marmara-barber-cologne-graffiti-no24-150ml" ? marmaraVariants.map(v => v.file) : product[0] === "babalux-solid-wax" ? solidWaxVariants.map(v => v.file) : product[0] === "wax-heater-500cc" ? waxHeaterVariants.map(v => v.file) : product[0] === "arko-men-shaving-cream-100g" ? arkoVariants[0].files : product[0] === "babalux-oxicream" ? oxicreamVariants.map(v => v.file) : (galleries[product[0]] || (product[4] ? [product[4]] : []));
   const description = product[5] || "Product details will be added when the source information is available.";
   const simpleSizeConfig = sizeVariantConfigs[product[0]];
-  const detailMetaTags = simpleSizeConfig
+  const detailMetaTags = product[0] === "jytop-1-piece-extra-large-black-donut-maker" ? [] : simpleSizeConfig
     ? product[6].filter(tag => !simpleSizeConfig.variants.some(v => String(v.value) === String(tag)))
     : product[6];
 
@@ -422,9 +431,14 @@ const arkoVariants = [
       options.appendChild(btn);
     });
     const meta = copy.querySelector(".meta");
-    if (meta) meta.insertAdjacentElement("afterend", picker);
+    const insertAfter = meta || copy.querySelector(".description");
+    if (insertAfter) insertAfter.insertAdjacentElement("afterend", picker);
     options.querySelectorAll("[data-size-variant]").forEach(btn => btn.addEventListener("click", () => {
       options.querySelectorAll("[data-size-variant]").forEach((b, i) => b.classList.toggle("active", i === Number(btn.dataset.sizeVariant)));
+      if (product[0] === "jytop-1-piece-extra-large-black-donut-maker") {
+        const sizeImageDot = document.querySelectorAll(".gallery-dot")[Number(btn.dataset.sizeVariant) + 1];
+        if (sizeImageDot) sizeImageDot.click();
+      }
     }));
   }
 
@@ -676,7 +690,7 @@ const arkoVariants = [
     if (sizeVariantConfigs[currentId]) {
       const config = sizeVariantConfigs[currentId];
       const option = config.variants[activeOptionIndex("[data-size-variant]")];
-      return {key:"size-" + option.value, label:"Size " + option.value + " inches", image:product[4], price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
+      return {key:"size-" + option.value, label:option.cartLabel || ("Size " + option.label), image:option.image || product[4], price:option.price || product[3], priceConfirmed:true, showImageBadge:option.showImageBadge !== false};
     }
 
     if (currentId === "excellence-brushes") {
