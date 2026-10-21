@@ -143,7 +143,7 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0B1
 </footer>
 
 <script src="cart.js?v=20261015variants"></script>
-<script src="products-data.js?v=20261021jytopdonutsizes2"></script>
+<script src="products-data.js?v=20261021jytopgallery2"></script>
 <script>
 const products = window.BABALUX_PRODUCTS || [];
 
@@ -208,6 +208,7 @@ if (!product) {
 } else {
   document.title = `BABALUX | ${product[1]}`;
   const galleries = {
+  "jytop-1-piece-extra-large-black-donut-maker": ["Tiered Black Mesh Hair Donuts image 1.jpg","Three Black Mesh Hair Donuts image 2.jpg"],
   "marmara-barber-cologne-graffiti-no24-150ml": ["Barber Marmara No. 24 Amber Cologne Display.png"],
   "threads-for-hair-fluted-500g": ["Luxury Hair Grips on Marble.png","Glossy Black Hairpins in a Crinkled Liner.png"],
   "babalux-barber-hair-styling-powder-wax": ["BABALUX Blue Barber Wax Showcase.png","BABALUX Red Powder Wax NEW.png","BABALUX Barber Powder Wax Display.png"],
@@ -434,10 +435,6 @@ const arkoVariants = [
     if (insertAfter) insertAfter.insertAdjacentElement("afterend", picker);
     options.querySelectorAll("[data-size-variant]").forEach(btn => btn.addEventListener("click", () => {
       options.querySelectorAll("[data-size-variant]").forEach((b, i) => b.classList.toggle("active", i === Number(btn.dataset.sizeVariant)));
-      if (product[0] === "jytop-1-piece-extra-large-black-donut-maker") {
-        const sizeImageDot = document.querySelectorAll(".gallery-dot")[Number(btn.dataset.sizeVariant) + 1];
-        if (sizeImageDot) sizeImageDot.click();
-      }
     }));
   }
 
