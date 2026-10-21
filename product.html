@@ -143,7 +143,7 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0B1
 </footer>
 
 <script src="cart.js?v=20261015variants"></script>
-<script src="products-data.js?v=20261021jytopdonutsizes1"></script>
+<script src="products-data.js?v=20261021jytopdonutsizes2"></script>
 <script>
 const products = window.BABALUX_PRODUCTS || [];
 
@@ -175,13 +175,13 @@ const sizeVariantConfigs = {
   "standard-hair-scissors": {
     label: "Choose size",
     variants: [{value:"6.0",label:"6.0 inches"},{value:"6.5",label:"6.5 inches"},{value:"7.0",label:"7.0 inches"}]
-  }
-  , "jytop-1-piece-extra-large-black-donut-maker": {
+  },
+  "jytop-1-piece-extra-large-black-donut-maker": {
     label: "Choose size",
     variants: [
-      {value:"small",label:"Small",image:"JYTOP Black Hair Donut Maker Small.jpg",showImageBadge:false},
-      {value:"medium",label:"Medium",image:"JYTOP Black Hair Donut Maker Medium.jpg",showImageBadge:false},
-      {value:"large",label:"Large",image:"JYTOP Black Hair Donut Maker Large.jpg",showImageBadge:false}
+      {value:"small",label:"Small",showImageBadge:false},
+      {value:"medium",label:"Medium",showImageBadge:false},
+      {value:"large",label:"Large",showImageBadge:false}
     ]
   }
 };
@@ -208,7 +208,6 @@ if (!product) {
 } else {
   document.title = `BABALUX | ${product[1]}`;
   const galleries = {
-  "jytop-1-piece-extra-large-black-donut-maker": ["JYTOP Black Hair Donut Maker Collection.jpg","JYTOP Black Hair Donut Maker Small.jpg","JYTOP Black Hair Donut Maker Medium.jpg","JYTOP Black Hair Donut Maker Large.jpg"],
   "marmara-barber-cologne-graffiti-no24-150ml": ["Barber Marmara No. 24 Amber Cologne Display.png"],
   "threads-for-hair-fluted-500g": ["Luxury Hair Grips on Marble.png","Glossy Black Hairpins in a Crinkled Liner.png"],
   "babalux-barber-hair-styling-powder-wax": ["BABALUX Blue Barber Wax Showcase.png","BABALUX Red Powder Wax NEW.png","BABALUX Barber Powder Wax Display.png"],
