@@ -695,6 +695,10 @@ const VARIANTS = {
       "label": "Size 7.0"
     }
   },
+  "babalux-hair-gel-n4": {
+    "size-n4": { "label": "Keratin Complex 4 — Ultra Hold" },
+    "size-n5": { "label": "Gum Effect Plus 5 — Ultra Hold" }
+  },
   "jytop-1-piece-extra-large-black-donut-maker": {
     "size-small": { "label": "Size: Small" },
     "size-medium": { "label": "Size: Medium" },
