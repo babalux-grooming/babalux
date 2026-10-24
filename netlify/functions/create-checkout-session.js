@@ -607,19 +607,19 @@ const VARIANTS = {
     },
     "fragrance-1": {
       "label": "No. 21 (400 ml)",
-      "pricePence": null
+      "pricePence": 399
     },
     "fragrance-2": {
       "label": "No. 22 (400 ml • Red)",
-      "pricePence": null
+      "pricePence": 399
     },
     "fragrance-3": {
       "label": "No. 22 (400 ml • Blue)",
-      "pricePence": null
+      "pricePence": 399
     },
     "fragrance-4": {
       "label": "No. 25 (150 ml)",
-      "pricePence": null
+      "pricePence": 399
     }
   },
   "babalux-solid-wax": {
