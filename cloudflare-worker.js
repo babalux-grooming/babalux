@@ -17,8 +17,8 @@ const PRODUCTS = {
     "pricePence": 499
   },
   "pet-scissors": {
-    "name": "PET SCISSORS",
-    "pricePence": 6499
+    "name": "PROFESSIONAL HAIRDRESSING SCISSORS",
+    "pricePence": 6999
   },
   "sonic-plastic-handle": {
     "name": "SONIC PLASTIC HANDLE SERIES",
