@@ -143,7 +143,7 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0B1
 </footer>
 
 <script src="cart.js?v=20261015variants"></script>
-<script src="products-data.js?v=20261024hairgelvariants"></script>
+<script src="products-data.js?v=20261024hairgelimagefix"></script>
 <script>
 const products = window.BABALUX_PRODUCTS || [];
 
@@ -782,6 +782,20 @@ const arkoVariants = [
       badge.textContent = selected && selected.showImageBadge ? selected.label : "";
       badge.style.display = selected && selected.showImageBadge ? "block" : "none";
     }
+
+    // N4/N5 are different physical gel formulas, so show only the selected formula's image.
+    if (product[0] === "babalux-hair-gel-n4" && selected && selected.image) {
+      const track = document.getElementById("gallery-track");
+      if (track) {
+        const imgAlt = "BABALUX " + product[1] + " — " + selected.label;
+        track.innerHTML = '<div class="gallery-slide"><img src="' + selected.image + '" alt="' + imgAlt.replace(/"/g, "&quot;") + '"></div>';
+        track.style.transform = "translateX(0)";
+      }
+      document.querySelectorAll(".gallery-arrow, .gallery-dots, .gallery-counter").forEach(node => {
+        node.style.display = "none";
+      });
+    }
+
     if (selected && selected.label) {
       document.querySelectorAll(".gallery-slide img").forEach(img => {
         img.alt = "BABALUX " + product[1] + " — " + selected.label;
