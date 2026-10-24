@@ -567,6 +567,10 @@ const VARIANTS = {
       "label": "Size 6.0 inches"
     }
   },
+  "standard-272": {
+    "size-5.5": { "label": "Size 5.5 inches" },
+    "size-6.5": { "label": "Size 6.5 inches" }
+  },
   "standard-2127": {
     "size-6.0": {
       "label": "Size 6.0 inches"
