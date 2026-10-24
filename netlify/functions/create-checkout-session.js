@@ -495,6 +495,58 @@ const PRODUCTS = {
   "hair-salon-chair-premium": {
     "name": "HAIR SALON CHAIR PREMIUM",
     "pricePence": 76099
+  },
+  "babalux-scissors-2015-6-blue": {
+    "name": "BABALUX SCISSORS 2015-6 BLUE 6.0 INCH",
+    "pricePence": 1199
+  },
+  "babalux-thinning-scissors-2012-7": {
+    "name": "BABALUX THINNING SCISSORS 2012-7 BLACK INSERTS 7.0 INCH",
+    "pricePence": 1499
+  },
+  "babalux-shavette-1975-red": {
+    "name": "BABALUX SHAVETTE 1975 RED HANDLE",
+    "pricePence": 499
+  },
+  "babalux-shavette-1971-wood": {
+    "name": "BABALUX SHAVETTE 1971 WOODEN HANDLE",
+    "pricePence": 999
+  },
+  "babalux-shavette-1972-black-gold": {
+    "name": "BABALUX SHAVETTE 1972 BLACK HANDLE GOLD DETAIL",
+    "pricePence": 999
+  },
+  "babalux-straight-razor-1974-black": {
+    "name": "BABALUX STRAIGHT RAZOR 1974 BLACK HANDLE",
+    "pricePence": 399
+  },
+  "babalux-scissors-2014-6-black": {
+    "name": "BABALUX SCISSORS 2014-6 BLACK HANDLES 6.0 INCH",
+    "pricePence": 899
+  },
+  "babalux-scissors-2016-6-5-black": {
+    "name": "BABALUX SCISSORS 2016-6.5 BLACK HANDLES 6.5 INCH",
+    "pricePence": 1499
+  },
+  "babalux-thinning-scissors-2017-5-5-black": {
+    "name": "BABALUX THINNING SCISSORS 2017-5.5 BLACK HANDLES 5.5 INCH",
+    "pricePence": 899
+  },
+  "babalux-scissors-2010-7-grey": {
+    "name": "BABALUX SCISSORS 2010-7 GREY 7.0 INCH",
+    "pricePence": 1199
+  },
+  "babalux-thinning-scissors-2016-5-5-blue": {
+    "name": "BABALUX THINNING SCISSORS 2016-5.5 BLUE 5.5 INCH",
+    "pricePence": 1499
+  },
+  "babalux-scissors-2010-6-black": {
+    "name": "BABALUX SCISSORS 2010-6 BLACK INSERTS 6.0 INCH",
+    "pricePence": 1199
+  },
+  "babalux-hair-wax-02": {
+    "name": "BABALUX HAIR WAX 02 AQUA STRONG WAX",
+    "pricePence": 799
   }
 };
 
@@ -638,6 +690,11 @@ const VARIANTS = {
     "size-7.0": {
       "label": "Size 7.0"
     }
+  },
+  "jytop-1-piece-extra-large-black-donut-maker": {
+    "size-small": { "label": "Size: Small" },
+    "size-medium": { "label": "Size: Medium" },
+    "size-large": { "label": "Size: Large" }
   }
 };
 
