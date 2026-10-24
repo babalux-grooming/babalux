@@ -143,7 +143,7 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0B1
 </footer>
 
 <script src="cart.js?v=20261015variants"></script>
-<script src="products-data.js?v=20261024hairgeltitleN4N5"></script>
+<script src="products-data.js?v=20261024geltitleoverride"></script>
 <script>
 const products = window.BABALUX_PRODUCTS || [];
 
@@ -217,6 +217,11 @@ if (!product) {
     <a class="buy-button" href="index.html#products">View Products</a>
   `;
 } else {
+  if (product[0] === "babalux-hair-gel-n4") {
+    product[1] = "BABALUX HAIR GEL N4 & N5";
+    product[5] = "Hair styling gel available in Keratin Complex 4 and Gum Effect Plus 5. Ultra Hold.";
+    product[6] = ["N4", "N5", "Keratin Complex 4", "Gum Effect Plus 5", "Ultra Hold"];
+  }
   document.title = `BABALUX | ${product[1]}`;
   const galleries = {
   "jytop-1-piece-extra-large-black-donut-maker": ["Tiered Black Mesh Hair Donuts image 1.jpg","Three Black Mesh Hair Donuts image 2.jpg"],
