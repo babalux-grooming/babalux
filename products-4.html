@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="products-catalog.css?v=20261020search">
+<link rel="stylesheet" href="products-catalog.css?v=20261024categoryactive2">
 </head>
 <body data-page="4">
 <header>
@@ -39,7 +39,7 @@
       <input id="catalogue-search-input" type="search" placeholder="Search all products by name, category or details…" autocomplete="off" aria-controls="product-grid">
       <button id="catalogue-search-clear" type="button" hidden>Clear</button>
     </form>
-    <nav class="category-quick-links" aria-label="Browse product categories"><a href="collection.html?type=scissors">Scissors</a><a href="collection.html?type=razors">Razors</a><a href="collection.html?type=combs">Combs</a><a href="collection.html?type=wax">Hair Wax</a><a href="collection.html?type=shaving">Shaving Products</a><a href="collection.html?type=accessories">Accessories</a><a href="products-1.html">All Products</a></nav>
+    <nav class="category-quick-links" aria-label="Browse product categories"><a data-collection-type="scissors" href="collection.html?type=scissors">Scissors</a><a data-collection-type="razors" href="collection.html?type=razors">Razors</a><a data-collection-type="combs" href="collection.html?type=combs">Combs</a><a data-collection-type="wax" href="collection.html?type=wax">Hair Wax</a><a data-collection-type="shaving" href="collection.html?type=shaving">Shaving Products</a><a data-collection-type="accessories" href="collection.html?type=accessories">Accessories</a><a href="products-1.html">All Products</a></nav>
     <p class="search-status" id="catalogue-search-status" role="status" aria-live="polite"></p>
 
     <div class="product-grid" id="product-grid"></div>
@@ -59,5 +59,6 @@
 <script src="cart.js?v=20261015variants"></script>
 <script src="products-data.js?v=20261021americanlineproductimage1"></script>
 <script src="products-catalog.js?v=20261020search"></script>
+<script src="category-quick-links.js?v=20261024active2"></script>
 </body>
 </html>
