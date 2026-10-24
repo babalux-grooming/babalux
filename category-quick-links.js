@@ -6,7 +6,7 @@
   const currentUrl = new URL(window.location.href);
   const categories = new Set(["scissors", "razors", "combs", "wax", "shaving", "accessories"]);
   const isCollectionPage = /(?:^|\/)collection\.html$/i.test(currentUrl.pathname);
-  const isAllProductsPage = document.body.hasAttribute("data-page") || /(?:^|\\/)products-\\d+\\.html$/i.test(currentUrl.pathname);
+  const isAllProductsPage = document.body.hasAttribute("data-page");
   const requestedType = (currentUrl.searchParams.get("type") || "").trim().toLowerCase();
   const selectedType = categories.has(requestedType) ? requestedType : "scissors";
 
@@ -20,7 +20,7 @@
       }
 
       const targetType = (targetUrl.searchParams.get("type") || "").trim().toLowerCase();
-      const isAllProductsLink = link.hasAttribute("data-all-products") || /(?:^|\\/)products-1\\.html$/i.test(targetUrl.pathname);
+      const isAllProductsLink = link.hasAttribute("data-all-products");
       const selected = (isCollectionPage && targetType === selectedType) ||
         (isAllProductsPage && isAllProductsLink);
 
