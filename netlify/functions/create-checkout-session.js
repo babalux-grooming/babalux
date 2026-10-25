@@ -588,15 +588,9 @@ const VARIANTS = {
     }
   },
   "standard-hair-scissors": {
-    "size-6.0": {
-      "label": "Size 6.0 inches"
-    },
-    "size-6.5": {
-      "label": "Size 6.5 inches"
-    },
-    "size-7.0": {
-      "label": "Size 7.0 inches"
-    }
+    "size-5.5": { "label": "Size 5.5 inches" },
+    "size-6.0": { "label": "Size 6.0 inches" },
+    "size-6.5": { "label": "Size 6.5 inches" }
   },
   "threads-for-hair-fluted-500g": {
     "size-5.0": { "label": "Size 5.0" },
