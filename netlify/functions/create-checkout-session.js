@@ -480,6 +480,10 @@ const PRODUCTS = {
     "name": "Hair Clips box 500g",
     "pricePence": 599
   },
+  "american-line-bobby-pins-500g": {
+    "name": "AMERICAN LINE BOBBY PINS",
+    "pricePence": 599
+  },
   "thread-for-hair-removal": {
     "name": "THREAD FOR HAIR REMOVAL",
     "pricePence": 499
