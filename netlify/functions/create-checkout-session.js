@@ -472,6 +472,10 @@ const PRODUCTS = {
     "name": "BARBER NECK DUSTER BRUSH",
     "pricePence": 499
   },
+  "kiepe-pro-booster-hair-trimmer": {
+    "name": "KIEPE PRO BOOSTER MINI HAIR TRIMMER",
+    "pricePence": 8999
+  },
   "threads-for-hair-fluted-500g": {
     "name": "Hair Clips box 500g",
     "pricePence": 599
