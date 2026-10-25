@@ -143,7 +143,7 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0B1
 </footer>
 
 <script src="cart.js?v=20261015variants"></script>
-<script src="products-data.js?v=20261025threadsbox500gtitle"></script>
+<script src="products-data.js?v=20261025americanlinesizes5070"></script>
 <script>
 const products = window.BABALUX_PRODUCTS || [];
 
@@ -562,7 +562,7 @@ const arkoVariants = [
     }));
   }
 
-  if (product[0] === "threads-for-hair-fluted-500g") {
+  if (product[0] === "threads-for-hair-fluted-500g" || product[0] === "american-line-bobby-pins-500g") {
     const copy = document.querySelector(".product-copy");
     const picker = document.createElement("div");
     picker.className = "variant-picker";
@@ -753,7 +753,7 @@ const arkoVariants = [
       return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:option.file, price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
     }
 
-    if (currentId === "threads-for-hair-fluted-500g") {
+    if (currentId === "threads-for-hair-fluted-500g" || currentId === "american-line-bobby-pins-500g") {
       const option = threadsHairVariants[activeOptionIndex("[data-threads-hair-variant]")];
       return {key:"size-" + option.name, label:"Size " + option.name, image:product[4], price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
     }
