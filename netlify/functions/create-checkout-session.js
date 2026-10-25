@@ -481,7 +481,7 @@ const PRODUCTS = {
     "pricePence": 599
   },
   "american-line-bobby-pins-500g": {
-    "name": "AMERICAN LINE BLACK HAIR PINS",
+    "name": "THREADS FOR HAIR IN A BOX, FLUTED (500g)",
     "pricePence": 599
   },
   "thread-for-hair-removal": {
