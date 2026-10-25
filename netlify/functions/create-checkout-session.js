@@ -473,7 +473,7 @@ const PRODUCTS = {
     "pricePence": 499
   },
   "threads-for-hair-fluted-500g": {
-    "name": "THREADS FOR HAIR IN A BOX, FLUTED (500g)",
+    "name": "Hair Clips box 500g",
     "pricePence": 599
   },
   "thread-for-hair-removal": {
@@ -589,6 +589,10 @@ const VARIANTS = {
     "size-7.0": {
       "label": "Size 7.0 inches"
     }
+  },
+  "threads-for-hair-fluted-500g": {
+    "size-5.0": { "label": "Size 5.0" },
+    "size-7.0": { "label": "Size 7.0" }
   },
   "excellence-brushes": {
     "colour-gold": {
