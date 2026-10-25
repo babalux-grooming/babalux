@@ -481,7 +481,7 @@ const PRODUCTS = {
     "pricePence": 599
   },
   "american-line-bobby-pins-500g": {
-    "name": "AMERICAN LINE BOBBY PINS",
+    "name": "AMERICAN LINE",
     "pricePence": 599
   },
   "thread-for-hair-removal": {
