@@ -707,6 +707,10 @@ const VARIANTS = {
       "label": "Size 7.0"
     }
   },
+  "american-line-bobby-pins-500g": {
+    "size-5.0": { "label": "Size 5.0" },
+    "size-7.0": { "label": "Size 7.0" }
+  },
   "babalux-hair-gel-n4": {
     "size-n4": { "label": "Keratin Complex 4 — Ultra Hold" },
     "size-n5": { "label": "Gum Effect Plus 5 — Ultra Hold" }
