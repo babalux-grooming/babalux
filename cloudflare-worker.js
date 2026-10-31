@@ -754,13 +754,48 @@ async function getShippingQuote(rawPostcode) {
   if (excludedDistricts.has(String(place.admin_district || ""))) {
     throw new Error("That postcode is outside our mainland delivery area at the moment.");
   }
-  const zone = place.region === "West Midlands" ? "West Midlands" : "Rest of mainland UK";
-  const feePence = zone === "West Midlands" ? 499 : 699;
+  const region = String(place.region || "").trim().toLowerCase();
+  const county = String(place.admin_county || "").trim().toLowerCase();
+  const district = String(place.admin_district || "").trim().toLowerCase();
+
+  // Staffordshire is priced with the West Midlands, including Stoke-on-Trent.
+  const staffordshireDistricts = new Set([
+    "cannock chase", "east staffordshire", "lichfield", "newcastle-under-lyme",
+    "south staffordshire", "stafford", "staffordshire moorlands", "tamworth",
+    "stoke-on-trent"
+  ]);
+  const isStaffordshire = county.includes("staffordshire") || staffordshireDistricts.has(district);
+
+  let zone;
+  let feePence;
+  if (region === "west midlands" || isStaffordshire) {
+    zone = "West Midlands & Staffordshire";
+    feePence = 350;
+  } else if (place.country === "Wales" || region === "wales" || region === "east midlands") {
+    zone = place.country === "Wales" || region === "wales" ? "Wales" : "East Midlands";
+    feePence = 430;
+  } else if (region === "london") {
+    zone = "London";
+    feePence = 450;
+  } else if (["north west", "south east", "east of england"].includes(region)) {
+    zone = region === "north west" ? "North West" : region === "south east" ? "South East" : "East of England";
+    feePence = 510;
+  } else if (region === "yorkshire and the humber" || region === "south west") {
+    const isFarSouthWest = county.includes("cornwall") || district.includes("cornwall");
+    zone = isFarSouthWest ? "Far South West" : region === "south west" ? "South West" : "Yorkshire";
+    feePence = isFarSouthWest ? 670 : 590;
+  } else if (region === "north east" || place.country === "Scotland" || region === "scotland") {
+    zone = place.country === "Scotland" || region === "scotland" ? "Mainland Scotland" : "North East";
+    feePence = 670;
+  } else {
+    throw new Error("We can't calculate a delivery rate for that postcode yet. Please contact BABALUX for a delivery quote.");
+  }
+
   return {
     postcode: place.postcode,
     zone,
     feePence,
-    label: zone === "West Midlands" ? "West Midlands delivery" : "Mainland UK delivery"
+    label: zone + " delivery"
   };
 }
 
