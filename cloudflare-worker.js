@@ -563,6 +563,10 @@ const PRODUCTS = {
   "babalux-blue-bleaching-powder-500g": {
     "name": "BABALUX BLUE BLEACHING POWDER +7 LEVELS 500G",
     "pricePence": 1099
+  },
+  "babalux-magic-liss-protein-treatment-1000ml": {
+    "name": "BABALUX MAGIC LISS PROTEIN HAIR TREATMENT 1000ML",
+    "pricePence": 9999
   }
 };
 
