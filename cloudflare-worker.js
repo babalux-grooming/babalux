@@ -25,7 +25,7 @@ const PRODUCTS = {
     "pricePence": 999
   },
   "studio-techno-relax-th": {
-    "name": "STUDIO TECHNO RELAX-TH",
+    "name": "STUDIO TECHNO RELAX-TH ERGONOMIC",
     "pricePence": 2699
   },
   "standard-272": {
@@ -401,7 +401,7 @@ const PRODUCTS = {
     "pricePence": 2099
   },
   "jytop-1-piece-extra-large-black-donut-maker": {
-    "name": "JYTOP 1 PIECE EXTRA LARGE BLACK DONUT MAKER",
+    "name": "JYTOP 1 PIECE BLACK DONUT MAKER",
     "pricePence": 199
   },
   "aichun-beauty-charcoal-snake-oil-peel-off-mask": {
@@ -473,7 +473,7 @@ const PRODUCTS = {
     "pricePence": 499
   },
   "threads-for-hair-fluted-500g": {
-    "name": "THREADS FOR HAIR IN A BOX, FLUTED (500g)",
+    "name": "Hair Clips box 500g",
     "pricePence": 599
   },
   "thread-for-hair-removal": {
@@ -721,10 +721,10 @@ const VARIANTS = {
     }
   },
   "babalux-hair-gel-n4": {
-    "formula-n4": {
+    "size-n4": {
       "label": "Keratin Complex 4 — Ultra Hold"
     },
-    "formula-n5": {
+    "size-n5": {
       "label": "Gum Effect Plus 5 — Ultra Hold"
     }
   },
