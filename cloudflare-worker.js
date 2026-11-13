@@ -567,6 +567,10 @@ const PRODUCTS = {
   "babalux-magic-liss-protein-treatment-1000ml": {
     "name": "BABALUX MAGIC LISS PROTEIN HAIR TREATMENT 1000ML",
     "pricePence": 9999
+  },
+  "babalux-lemon-cologne-5000ml": {
+    "name": "BABALUX BARBER LEMON COLOGNE 5000ML",
+    "pricePence": 1799
   }
 };
 
