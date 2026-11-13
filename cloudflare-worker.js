@@ -81,7 +81,7 @@ const PRODUCTS = {
     "pricePence": 799
   },
   "babalux-hair-gel-n4": {
-    "name": "BABALUX HAIR GEL N4",
+    "name": "BABALUX HAIR GEL N4 / N5",
     "pricePence": 599
   },
   "babalux-solid-wax": {
@@ -711,6 +711,30 @@ const VARIANTS = {
     "size-small": { "label": "Size: Small" },
     "size-medium": { "label": "Size: Medium" },
     "size-large": { "label": "Size: Large" }
+  },
+  "standard-272": {
+    "size-5.5": {
+      "label": "Size 5.5 inches"
+    },
+    "size-6.5": {
+      "label": "Size 6.5 inches"
+    }
+  },
+  "babalux-hair-gel-n4": {
+    "formula-n4": {
+      "label": "Keratin Complex 4 — Ultra Hold"
+    },
+    "formula-n5": {
+      "label": "Gum Effect Plus 5 — Ultra Hold"
+    }
+  },
+  "american-line-bobby-pins-500g": {
+    "size-5.0": {
+      "label": "Size 5.0"
+    },
+    "size-7.0": {
+      "label": "Size 7.0"
+    }
   }
 };
 
