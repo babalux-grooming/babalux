@@ -547,6 +547,22 @@ const PRODUCTS = {
   "babalux-hair-wax-02": {
     "name": "BABALUX HAIR WAX 02 AQUA STRONG WAX",
     "pricePence": 799
+  },
+  "hard-wax-beans-beauty-salon-500g": {
+    "name": "Hard Wax Beans, Hard Wax Hair Removal Hair, Removal Special Hard Wax Bean for Beauty Salon 500g",
+    "pricePence": 699
+  },
+  "kiepe-pro-booster-hair-trimmer": {
+    "name": "KIEPE PRO BOOSTER MINI HAIR TRIMMER",
+    "pricePence": 8999
+  },
+  "american-line-bobby-pins-500g": {
+    "name": "THREADS FOR HAIR IN A BOX, FLUTED (500g)",
+    "pricePence": 599
+  },
+  "babalux-blue-bleaching-powder-500g": {
+    "name": "BABALUX BLUE BLEACHING POWDER +7 LEVELS 500G",
+    "pricePence": 1099
   }
 };
 
