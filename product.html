@@ -156,6 +156,8 @@ const oxicreamVariants = [
 let selectedOxicreamVariant = 0;
 const threadsHairVariants = [{name:"5.0"},{name:"7.0"}];
 let selectedThreadsHairVariant = 0;
+const blackHairPinsVariants = [{name:"N7",code:"30022"},{name:"N5",code:"30023"}];
+let selectedBlackHairPinsVariant = 0;
 let selectedPowderWaxVariant = 0;
 
 
@@ -227,6 +229,7 @@ if (!product) {
   }
   document.title = `BABALUX | ${product[1]}`;
   const galleries = {
+  "black-hair-pins-500g": ["black-hair-pins-500g-main.jpg","black-hair-pins-500g-detail.jpg"],
   "jytop-1-piece-extra-large-black-donut-maker": ["Tiered Black Mesh Hair Donuts image 1.jpg","Three Black Mesh Hair Donuts image 2.jpg"],
   "marmara-barber-cologne-graffiti-no24-150ml": ["Barber Marmara No. 24 Amber Cologne Display.png"],
   "threads-for-hair-fluted-500g": ["sabrina-hair-grips.jpg"],
@@ -565,6 +568,47 @@ const arkoVariants = [
     }));
   }
 
+
+  if (product[0] === "black-hair-pins-500g") {
+    const copy = document.querySelector(".product-copy");
+    const picker = document.createElement("div");
+    picker.className = "variant-picker";
+    const label = document.createElement("span");
+    label.className = "variant-label";
+    label.textContent = "Choose type";
+    picker.appendChild(label);
+    const options = document.createElement("div");
+    options.className = "variant-options";
+    picker.appendChild(options);
+    blackHairPinsVariants.forEach((v,i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "variant-option" + (i === 0 ? " active" : "");
+      btn.dataset.blackHairPinsVariant = i;
+      const span = document.createElement("span");
+      span.textContent = v.name + " — 500g (Code " + v.code + ")";
+      btn.appendChild(span);
+      options.appendChild(btn);
+    });
+    const status = document.createElement("div");
+    status.className = "borthe-selection-status";
+    status.textContent = "Selected: ";
+    const strong = document.createElement("strong");
+    strong.id = "black-hair-pins-selected";
+    strong.textContent = "N7 (500g, Code 30022)";
+    status.appendChild(strong);
+    picker.appendChild(status);
+    const meta = copy.querySelector(".meta");
+    if (meta) meta.insertAdjacentElement("afterend", picker);
+    document.querySelectorAll("[data-black-hair-pins-variant]").forEach(btn => btn.addEventListener("click", () => {
+      const selected = Number(btn.dataset.blackHairPinsVariant);
+      selectedBlackHairPinsVariant = selected;
+      document.querySelectorAll("[data-black-hair-pins-variant]").forEach((b,i) => b.classList.toggle("active", i === selected));
+      const selectedEl = document.getElementById("black-hair-pins-selected");
+      if (selectedEl) selectedEl.textContent = blackHairPinsVariants[selected].name + " (500g, Code " + blackHairPinsVariants[selected].code + ")";
+    }));
+  }
+
   if (product[0] === "threads-for-hair-fluted-500g" || product[0] === "american-line-bobby-pins-500g") {
     const copy = document.querySelector(".product-copy");
     const picker = document.createElement("div");
@@ -754,6 +798,12 @@ const arkoVariants = [
     if (currentId === "babalux-barber-hair-styling-powder-wax") {
       const option = powderWaxVariants[activeOptionIndex("[data-powder-wax-variant]")];
       return {key:"colour-" + option.name.toLowerCase(), label:"Colour: " + option.name, image:option.file, price:option.price || product[3], priceConfirmed:true, showImageBadge:true};
+    }
+
+
+    if (currentId === "black-hair-pins-500g") {
+      const option = blackHairPinsVariants[activeOptionIndex("[data-black-hair-pins-variant]")];
+      return {key:"option-" + option.name.toLowerCase(), label:option.name + " (500g, Code " + option.code + ")", image:product[4], price:product[3], priceConfirmed:true, showImageBadge:false};
     }
 
     if (currentId === "threads-for-hair-fluted-500g" || currentId === "american-line-bobby-pins-500g") {
