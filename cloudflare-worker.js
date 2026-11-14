@@ -587,6 +587,10 @@ const PRODUCTS = {
   "kl-cupping-therapy-kit-30034-30035": {
     "name": "KL CUPPING THERAPY CUP & PUMP SET",
     "pricePence": 499
+  },
+  "more-for-you-roll-on-wax-100ml": {
+    "name": "MORE FOR YOU ROLL ON WAX 100ML",
+    "pricePence": 199
   }
 };
 
@@ -774,6 +778,14 @@ const VARIANTS = {
     },
     "size-pump-set": {
       "label": "Hand-pump cup set (Code 30035)"
+    }
+  },
+  "more-for-you-roll-on-wax-100ml": {
+    "size-natural": {
+      "label": "Natural (Code 4008)"
+    },
+    "size-azulen": {
+      "label": "Azulen (Code 4009)"
     }
   }
 };
