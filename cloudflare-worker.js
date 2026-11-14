@@ -583,6 +583,10 @@ const PRODUCTS = {
   "black-hair-pins-500g": {
     "name": "BLACK HAIR PINS 500G",
     "pricePence": 499
+  },
+  "kl-cupping-therapy-kit-30034-30035": {
+    "name": "KL CUPPING THERAPY CUP & PUMP SET",
+    "pricePence": 499
   }
 };
 
@@ -762,6 +766,14 @@ const VARIANTS = {
     },
     "option-n5": {
       "label": "N5 (500g, Code 30023)"
+    }
+  },
+  "kl-cupping-therapy-kit-30034-30035": {
+    "size-single-cup": {
+      "label": "Single suction cup (Code 30034)"
+    },
+    "size-pump-set": {
+      "label": "Hand-pump cup set (Code 30035)"
     }
   }
 };
