@@ -575,6 +575,10 @@ const PRODUCTS = {
   "karseell-maca-power-collagen-mask-500ml": {
     "name": "KARSEELL MACA POWER COLLAGEN HAIR MASK 500ML",
     "pricePence": 1499
+  },
+  "toni-guy-black-hair-sectioning-clips-30016": {
+    "name": "TONI&GUY BLACK HAIR SECTIONING CLIPS 30016",
+    "pricePence": 299
   }
 };
 
