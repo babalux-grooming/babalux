@@ -159,7 +159,7 @@
         const unitDisplay = priceConfirmed ? money.format(unit) + " each" : "Price to be confirmed";
         const totalDisplay = priceConfirmed ? money.format(lineTotal) : "Price pending";
         return '<article class="cart-item">' +
-          '<div class="cart-item-image-wrap"><img class="cart-item-image" src="' + escapeHtml(safeImageUrl(item.image || "")) + '" alt="' + escapeHtml(item.name || "BABALUX product") + '" loading="lazy">' +
+          '<div class="cart-item-image-wrap"><img class="cart-item-image" src="' + escapeHtml(safeImageUrl(item.id === "jytop-1-piece-extra-large-black-donut-maker" ? "hair_donut_bun_makers_no_price.jpg" : (item.image || ""))) + '" alt="' + escapeHtml(item.name || "BABALUX product") + '" loading="lazy">' +
             (item.variant ? '<span class="cart-item-variant-badge">' + escapeHtml(item.variant) + '</span>' : '') +
           '</div>' +
           '<div class="cart-item-info">' +
