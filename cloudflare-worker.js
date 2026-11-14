@@ -579,6 +579,10 @@ const PRODUCTS = {
   "toni-guy-black-hair-sectioning-clips-30016": {
     "name": "TONI&GUY BLACK HAIR SECTIONING CLIPS 30016",
     "pricePence": 299
+  },
+  "black-hair-pins-500g": {
+    "name": "BLACK HAIR PINS 500G",
+    "pricePence": 500
   }
 };
 
@@ -750,6 +754,14 @@ const VARIANTS = {
     },
     "size-7.0": {
       "label": "Size 7.0"
+    }
+  },
+  "black-hair-pins-500g": {
+    "option-n7": {
+      "label": "N7 (500g, Code 30022)"
+    },
+    "option-n5": {
+      "label": "N5 (500g, Code 30023)"
     }
   }
 };
