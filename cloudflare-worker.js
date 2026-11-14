@@ -402,7 +402,7 @@ const PRODUCTS = {
   },
   "jytop-1-piece-extra-large-black-donut-maker": {
     "name": "JYTOP 1 PIECE BLACK DONUT MAKER",
-    "pricePence": 199
+    "pricePence": 150
   },
   "aichun-beauty-charcoal-snake-oil-peel-off-mask": {
     "name": "AICHUN BEAUTY CHARCOAL SNAKE OIL PEEL-OFF MASK",
@@ -728,9 +728,9 @@ const VARIANTS = {
     }
   },
   "jytop-1-piece-extra-large-black-donut-maker": {
-    "size-small": { "label": "Size: Small" },
-    "size-medium": { "label": "Size: Medium" },
-    "size-large": { "label": "Size: Large" }
+    "size-small": { "label": "Small (Code 30025S)" },
+    "size-medium": { "label": "Medium (Code 30025N)" },
+    "size-large": { "label": "Large (Code 30025L)" }
   },
   "standard-272": {
     "size-5.5": {
