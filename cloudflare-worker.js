@@ -262,7 +262,7 @@ const PRODUCTS = {
   },
   "mefapo-hair-color-spray-120ml": {
     "name": "MEFAPO HAIR COLOR SPRAY 120ML",
-    "pricePence": 299
+    "pricePence": 199
   },
   "adult-hair-cape-salon-barber-cape": {
     "name": "ADULT HAIR CAPE SALON BARBER CAPE",
