@@ -582,7 +582,7 @@ const PRODUCTS = {
   },
   "black-hair-pins-500g": {
     "name": "BLACK HAIR PINS 500G",
-    "pricePence": 500
+    "pricePence": 499
   }
 };
 
