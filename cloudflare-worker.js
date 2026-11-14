@@ -571,6 +571,10 @@ const PRODUCTS = {
   "babalux-lemon-cologne-5000ml": {
     "name": "BABALUX BARBER LEMON COLOGNE 5000ML",
     "pricePence": 1799
+  },
+  "karseell-maca-power-collagen-mask-500ml": {
+    "name": "KARSEELL MACA POWER COLLAGEN HAIR MASK 500ML",
+    "pricePence": 1499
   }
 };
 
