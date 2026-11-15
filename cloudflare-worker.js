@@ -595,6 +595,10 @@ const PRODUCTS = {
   "black-mesh-hair-donut-bun-maker-30026": {
     "name": "BLACK MESH HAIR DONUT BUN MAKER 30026",
     "pricePence": 100
+  },
+  "more-for-you-canned-wax-40013-40014": {
+    "name": "MORE FOR YOU CANNED WAX",
+    "pricePence": 699
   }
 };
 
@@ -804,6 +808,16 @@ const VARIANTS = {
     "size-large": {
       "label": "Large (Code 30026L)",
       "pricePence": 200
+    }
+  },
+  "more-for-you-canned-wax-40013-40014": {
+    "size-titanium": {
+      "label": "Titanium (Code 40013)",
+      "pricePence": 699
+    },
+    "size-azulen": {
+      "label": "Azulen (Code 40014)",
+      "pricePence": 699
     }
   }
 };
