@@ -603,6 +603,10 @@ const PRODUCTS = {
   "more-for-you-non-woven-depilating-paper-40020-40022": {
     "name": "MORE FOR YOU NON-WOVEN DEPILATING PAPER",
     "pricePence": 700
+  },
+  "iha-single-use-hemostatic-sticks-a037": {
+    "name": "IHA SINGLE-USE HEMOSTATIC STICKS 24 PIECES",
+    "pricePence": 499
   }
 };
 
