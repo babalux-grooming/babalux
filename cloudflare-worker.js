@@ -591,6 +591,10 @@ const PRODUCTS = {
   "more-for-you-roll-on-wax-100ml": {
     "name": "MORE FOR YOU ROLL ON WAX 100ML",
     "pricePence": 199
+  },
+  "black-mesh-hair-donut-bun-maker-30026": {
+    "name": "BLACK MESH HAIR DONUT BUN MAKER 30026",
+    "pricePence": 100
   }
 };
 
@@ -786,6 +790,20 @@ const VARIANTS = {
     },
     "size-azulen": {
       "label": "Azulen (Code 4009)"
+    }
+  },
+  "black-mesh-hair-donut-bun-maker-30026": {
+    "size-small": {
+      "label": "Small (Code 30026S)",
+      "pricePence": 100
+    },
+    "size-medium": {
+      "label": "Medium",
+      "pricePence": 150
+    },
+    "size-large": {
+      "label": "Large (Code 30026L)",
+      "pricePence": 200
     }
   }
 };
