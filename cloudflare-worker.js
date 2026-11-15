@@ -599,6 +599,10 @@ const PRODUCTS = {
   "more-for-you-canned-wax-40013-40014": {
     "name": "MORE FOR YOU CANNED WAX",
     "pricePence": 699
+  },
+  "more-for-you-non-woven-depilating-paper-40020-40022": {
+    "name": "MORE FOR YOU NON-WOVEN DEPILATING PAPER",
+    "pricePence": 700
   }
 };
 
@@ -818,6 +822,16 @@ const VARIANTS = {
     "size-azulen": {
       "label": "Azulen (Code 40014)",
       "pricePence": 699
+    }
+  },
+  "more-for-you-non-woven-depilating-paper-40020-40022": {
+    "size-roll": {
+      "label": "Roll (Code 40020)",
+      "pricePence": 700
+    },
+    "size-pack": {
+      "label": "Folded pack (Code 40022)",
+      "pricePence": 300
     }
   }
 };
