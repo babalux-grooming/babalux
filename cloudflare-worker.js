@@ -607,6 +607,10 @@ const PRODUCTS = {
   "iha-single-use-hemostatic-sticks-a037": {
     "name": "IHA SINGLE-USE HEMOSTATIC STICKS 24 PIECES",
     "pricePence": 499
+  },
+  "bio-keratin-gold-professional-c09": {
+    "name": "BIO KERATIN GOLD PROFESSIONAL",
+    "pricePence": 5499
   }
 };
 
