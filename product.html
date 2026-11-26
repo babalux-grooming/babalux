@@ -143,7 +143,7 @@ footer{border-top:1px solid rgba(214,183,116,.14);padding:30px 0;background:#0B1
 </footer>
 
 <script src="cart.js?v=20261015variants"></script>
-<script src="products-data.js?v=20261125facialscrub499fix"></script>
+<script src="products-data.js?v=20261126bunmakerbeige"></script>
 <script>
 const products = window.BABALUX_PRODUCTS || [];
 
@@ -213,6 +213,11 @@ const sizeVariantConfigs = {
   },
   "black-mesh-hair-donut-bun-maker-30026": {
     label: "Choose size",
+    colourLabel: "Choose colour",
+    colours: [
+      {value:"black",label:"Black",image:"hair_donut_bun_makers_sizes_1x1.jpg",gallery:["hair_donut_bun_makers_sizes_1x1.jpg"]},
+      {value:"beige",label:"Beige",image:"bun_rings_product_image.jpg",gallery:["bun_rings_product_image.jpg"]}
+    ],
     variants: [
       {value:"small",label:"Small — Code 30026S",cartLabel:"Small (Code 30026S)",price:"£1.00",showImageBadge:true},
       {value:"medium",label:"Medium",cartLabel:"Medium",price:"£1.50",showImageBadge:true},
@@ -455,6 +460,7 @@ const arkoVariants = [
               : (galleries[product[0]] || (product[4] ? [product[4]] : []));
   let replaceGalleryImages = null;
   let activeScrubGalleryKey = null;
+  let activeBunMakerColour = null;
   const description = product[5] || "Product details will be added when the source information is available.";
   const simpleSizeConfig = sizeVariantConfigs[product[0]];
   const detailMetaTags = product[0] === "jytop-1-piece-extra-large-black-donut-maker" ? [] : simpleSizeConfig
@@ -515,6 +521,36 @@ const arkoVariants = [
     variantVisual.appendChild(badge);
   }
 
+  if (product[0] === "black-mesh-hair-donut-bun-maker-30026" && sizeVariantConfigs[product[0]].colours) {
+    const config = sizeVariantConfigs[product[0]];
+    const copy = document.querySelector(".product-copy");
+    const picker = document.createElement("div");
+    picker.className = "variant-picker bun-maker-colour-picker";
+    const label = document.createElement("span");
+    label.className = "variant-label";
+    label.textContent = config.colourLabel;
+    picker.appendChild(label);
+    const options = document.createElement("div");
+    options.className = "variant-options size-variant-options";
+    picker.appendChild(options);
+    config.colours.forEach((colour, i) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "variant-option" + (i === 0 ? " active" : "");
+      btn.dataset.bunMakerColour = colour.value;
+      const span = document.createElement("span");
+      span.textContent = colour.label;
+      btn.appendChild(span);
+      options.appendChild(btn);
+    });
+    const meta = copy.querySelector(".meta");
+    if (meta) meta.insertAdjacentElement("afterend", picker);
+    options.querySelectorAll("[data-bun-maker-colour]").forEach(btn => btn.addEventListener("click", () => {
+      options.querySelectorAll("[data-bun-maker-colour]").forEach(b => b.classList.toggle("active", b === btn));
+      updateSelectedVariantPresentation();
+    }));
+  }
+
   if (sizeVariantConfigs[product[0]]) {
     const config = sizeVariantConfigs[product[0]];
     const copy = document.querySelector(".product-copy");
@@ -539,7 +575,7 @@ const arkoVariants = [
       options.appendChild(btn);
     });
     const meta = copy.querySelector(".meta");
-    const insertAfter = meta || copy.querySelector(".description");
+    const insertAfter = copy.querySelector(".bun-maker-colour-picker") || meta || copy.querySelector(".description");
     if (insertAfter) insertAfter.insertAdjacentElement("afterend", picker);
     options.querySelectorAll("[data-size-variant]").forEach(btn => btn.addEventListener("click", () => {
       options.querySelectorAll("[data-size-variant]").forEach((b, i) => b.classList.toggle("active", i === Number(btn.dataset.sizeVariant)));
@@ -854,6 +890,20 @@ const arkoVariants = [
     if (sizeVariantConfigs[currentId]) {
       const config = sizeVariantConfigs[currentId];
       const option = config.variants[activeOptionIndex("[data-size-variant]")];
+      if (config.colours) {
+        const colour = config.colours[activeOptionIndex("[data-bun-maker-colour]")];
+        const sizeLabel = option.cartLabel || ("Size " + option.label);
+        return {
+          key: colour.value === "black" ? "size-" + option.value : "colour-" + colour.value + "-size-" + option.value,
+          label: colour.label + " — " + sizeLabel,
+          image: colour.image || product[4],
+          gallery: colour.gallery || null,
+          colour: colour.value,
+          price: option.price || product[3],
+          priceConfirmed: true,
+          showImageBadge: true
+        };
+      }
       return {key:"size-" + option.value, label:option.cartLabel || ("Size " + option.label), image:option.image || product[4], gallery:option.gallery || null, price:option.price || product[3], priceConfirmed:true, showImageBadge:option.showImageBadge !== false};
     }
 
@@ -980,6 +1030,11 @@ const arkoVariants = [
 
     if (product[0] === "borthe-facial-lightening-scrub-500g" && selected && selected.gallery && selected.key !== activeScrubGalleryKey && replaceGalleryImages) {
       activeScrubGalleryKey = selected.key;
+      replaceGalleryImages(selected.gallery);
+    }
+
+    if (product[0] === "black-mesh-hair-donut-bun-maker-30026" && selected && selected.gallery && selected.colour !== activeBunMakerColour && replaceGalleryImages) {
+      activeBunMakerColour = selected.colour;
       replaceGalleryImages(selected.gallery);
     }
 
